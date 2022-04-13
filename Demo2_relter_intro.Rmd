@@ -1,0 +1,24 @@
+---
+title: "Introducing ReLTER"
+author: "Micha Silver"
+date: "13/04/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## What is ReLTER
+
+```{r cars}
+summary(cars)
+```
+
+## Basic functions
+
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
