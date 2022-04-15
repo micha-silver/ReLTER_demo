@@ -1,25 +1,59 @@
 ---
-title: "Rstudio Intro"
+title: "`R` and RStudio Intro"
 author: "Micha Silver"
 date: "13/04/2022"
-output: html_document
+output:
+  html_document:
+    toc: true
+    theme: united
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+## Some online resources
+ - R for Data Science: https://r4ds.had.co.nz/index.html 
+ - Geocomputation with R: https://geocompr.robinlovelace.net/
+ - Rseek: https://rseek.org/
+ 
 ## Beginning with Rstudio and git
+Start a new package based on a git repo
 
-```{r cars}
-summary(cars)
-```
+Basics of git:
 
-## Markdown versus script
+  - https://git-scm.com/book/en/v2/Git-Basics-Getting-a-Git-Repository
+  - https://r-bio.github.io/intro-git-rstudio/
+
+## Where to get `R` packages
+ - CRAN: https://cran.r-project.org/
+ - BioConductor: https://www.bioconductor.org/install/
+ - Packages developed on github, i.e. `ReLTER`
+ 
+```{r startup, message=FALSE}
+# Install some standard spatial packages from CRAN
+if (!require("sf", quietly = TRUE))
+  install.packages(c("sf", "terra"))
+
+# package from Bioconductor
+if (!require("BiocManager", quietly = TRUE))
+  install.packages("BiocManager")
+BiocManager::install()
+BiocManager::install("EBImage")
+
+# Install development package from github
+if (!require("remotes", quietly = TRUE))
+  install.packages("remotes")
+
+if (!require("ReLTER", quietly = TRUE))
+  remotes::install_github("oggioniale/ReLTER")
+``` 
+
+## Markdown versus `R` script
+ - Code is the same
+ - RMarkdown adds formatted text and outputs
+ - Perfect for reports and ... demos
 
 
 
-```{r pressure, echo=FALSE}
-plot(pressure)
-```
 

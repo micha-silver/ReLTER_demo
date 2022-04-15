@@ -2,7 +2,10 @@
 title: "Introducing ReLTER"
 author: "Micha Silver"
 date: "13/04/2022"
-output: html_document
+output:
+  html_document:
+    toc: true
+    theme: united
 ---
 
 ```{r setup, include=FALSE}
@@ -11,14 +14,25 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## What is ReLTER
 
-```{r cars}
-summary(cars)
+```{r about}
+library(ReLTER)
+maintainer("ReLTER")
+citation("ReLTER")
 ```
 
 ## Basic functions
 
+```{r functions}
+ls("package:ReLTER")
+```
+#### Categories
+ - network functions
+ - site specific functions
+ - metadata functions
+ - taxonomy functions
+ 
+## Examples
+```{r examples}
 
-```{r pressure, echo=FALSE}
-plot(pressure)
 ```
 

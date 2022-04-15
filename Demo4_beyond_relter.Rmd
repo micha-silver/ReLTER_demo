@@ -1,0 +1,30 @@
+---
+title: "Going beyond ReLTER"
+author: "Micha Silver"
+date: "13/04/2022"
+output:
+  html_document:
+    toc: true
+    theme: united
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## What can be done with ReLTER outputs 
+
+```{r saving}
+```
+
+## Plotting with other data
+
+```{r plotting}
+```
+
+## Time series
+
+## Future plans
+ - Acquire MODIS products
+ - Acquire species distribution from GBIF: https://www.gbif.org/dataset/search
+ - Acquire high resolution landcover data from ESA Worldcover: https://esa-worldcover.org/
