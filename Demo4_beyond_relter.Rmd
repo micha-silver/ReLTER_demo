@@ -12,6 +12,11 @@ output:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+```{r packages, echo=FALSE, include=FALSE}
+pkg_list <- c("sf", "terra", "ReLTER", "tmap")
+lapply(pkg_list,require, character.only = TRUE)
+```
+
 ## What can be done with ReLTER outputs 
 
 ```{r saving}

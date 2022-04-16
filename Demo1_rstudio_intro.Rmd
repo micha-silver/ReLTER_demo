@@ -18,7 +18,9 @@ knitr::opts_chunk$set(echo = TRUE)
  - Rseek: https://rseek.org/
  
 ## Beginning with Rstudio and git
-Start a new package based on a git repo
+Start a new package **based on a git repo**.
+
+Encourages collaboration "out of the box".
 
 Basics of git:
 
@@ -30,7 +32,7 @@ Basics of git:
  - BioConductor: https://www.bioconductor.org/install/
  - Packages developed on github, i.e. `ReLTER`
  
-```{r startup, message=FALSE}
+```{r packages, message=FALSE}
 # Install some standard spatial packages from CRAN
 if (!require("sf", quietly = TRUE))
   install.packages(c("sf", "terra"))
@@ -48,12 +50,25 @@ if (!require("remotes", quietly = TRUE))
 if (!require("ReLTER", quietly = TRUE))
   remotes::install_github("oggioniale/ReLTER")
 ``` 
+## Loading packages
+
+After installing, we need to load the packages into this `R` session.
+
+```{r loading}
+# Convenient way to load list of packages
+pkg_list <- c("sf", "terra", "ReLTER", "tmap")
+lapply(pkg_list,require, character.only = TRUE)
+```
 
 ## Markdown versus `R` script
  - Code is the same
  - RMarkdown adds formatted text and outputs
  - Perfect for reports and ... demos
 
-
+## RStudio hints
+  - Always work in an R project
+  - Do **not** `setwd()`
+  - Do **not save workspace** to `.Rdata`
+  - Use Control+Shift+F10 often
 
 

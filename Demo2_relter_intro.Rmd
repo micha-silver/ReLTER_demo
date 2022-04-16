@@ -10,6 +10,11 @@ output:
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+# Convenient way to load list of packages
+pkg_list <- c("sf", "terra", "ReLTER", "tmap")
+lapply(pkg_list,require, character.only = TRUE)
+tmap_options(check.and.fix = TRUE)
+tmap_mode("view")
 ```
 
 ## What is ReLTER
@@ -25,14 +30,80 @@ citation("ReLTER")
 ```{r functions}
 ls("package:ReLTER")
 ```
+
 #### Categories
+
  - network functions
  - site specific functions
  - metadata functions
  - taxonomy functions
  
 ## Examples
-```{r examples}
 
+Search for DEIMS ID for a particular site. The function `get_ilter_generalinfo` allows to search by country name and site name.
+
+```{r example1}
+# Hohe Tauern National Park
+hohe = get_ilter_generalinfo(country_name = "Austria",
+                              site_name = "Hohe Tauern")
+(hohe_id = hohe$uri)
+```
+
+#### Plot a basic map of that site. We use the `tmap` package for viewing maps.
+
+```{r plot-site}
+hohe_polygon <- get_site_info(hohe_id, category = "Boundaries")
+tm_basemap() + 
+  tm_shape(hohe_polygon) +
+  tm_fill(col = "blue", alpha = 0.3)
+```
+
+#### Retrieve metadata about a site. 
+
+```{r example2}
+#In this example Loch Kinord in Scotland. 
+
+loch_kinord <- get_ilter_generalinfo(country_name = "United K",
+                              site_name = "Loch Kinord")
+(loch_kinord_id = loch_kinord$uri)
+loch_kinord_details <- get_site_info(loch_kinord_id,
+                                 c("Contacts", "EnvCharacts", "Parameters"))
+
+print(paste("Site manager:",
+            loch_kinord_details$generalInfo.siteManager[[1]]['name'],
+            loch_kinord_details$generalInfo.siteManager[[1]]['email']))
+print("Metadata contact:")
+(loch_kinord_details$generalInfo.metadataProvider[[1]]['name'])
+print(paste("Average air temperature:",
+            loch_kinord_details$envCharacteristics.airTemperature.avg))
+print(paste("Annual precipitation:",
+            loch_kinord_details$envCharacteristics.precipitation.annual))
+print(paste("GeoBonBiome:",
+            loch_kinord_details$envCharacteristics.geoBonBiome[[1]]))
+print("Parameters:")
+(loch_kinord_details$parameter[[1]]['parameterLabel'])
+
+```
+
+#### Query a network, The LTER network in Slovakia
+
+```{r example3}
+lter_slovakia_id = "https://deims.org/networks/3d6a8d72-9f86-4082-ad56-a361b4cdc8a0"
+
+network_research_topics <- get_network_research_topics(lter_slovakia_id)
+head(network_research_topics$researchTopicsLabel, 20)
+network_sites <- get_network_sites(lter_slovakia_id)
+network_sites$title
+
+lter_slovakia <- produce_network_points_map(lter_slovakia_id, "SVK")
+# The country border is available after running produce_network_points_map()
+svk <- readRDS("gadm36_SVK_0_sp.rds")
+tm_basemap() + 
+  tm_shape(lter_slovakia) + 
+  tm_dots(col = "blue", size=0.04) +
+  tm_shape(svk) + 
+  tm_borders(col = "purple") +
+  tm_grid(alpha = 0.4) +
+  tm_scale_bar(position = c("right", "bottom"))
 ```
 

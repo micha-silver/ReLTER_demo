@@ -9,11 +9,15 @@ output:
 ---
 
 ```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
 
+```{r packages, echo=FALSE, include=FALSE}
+pkg_list <- c("sf", "terra", "ReLTER", "tmap")
+lapply(pkg_list,require, character.only = TRUE)
 ```
 
 ## Additional functions
-
 
 ```{r chaining}
 

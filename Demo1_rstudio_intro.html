@@ -175,7 +175,9 @@ pre code {
 <li><a href="#some-online-resources">Some online resources</a></li>
 <li><a href="#beginning-with-rstudio-and-git">Beginning with Rstudio and git</a></li>
 <li><a href="#where-to-get-r-packages">Where to get <code>R</code> packages</a></li>
+<li><a href="#loading-packages">Loading packages</a></li>
 <li><a href="#markdown-versus-r-script">Markdown versus <code>R</code> script</a></li>
+<li><a href="#rstudio-hints">RStudio hints</a></li>
 </ul>
 </div>
 
@@ -189,7 +191,7 @@ pre code {
 </div>
 <div id="beginning-with-rstudio-and-git" class="section level2">
 <h2>Beginning with Rstudio and git</h2>
-<p>Start a new package based on a git repo</p>
+<p>Start a new package <strong>based on a git repo</strong> Encourages collaboration “out of the box”.</p>
 <p>Basics of git:</p>
 <ul>
 <li><a href="https://git-scm.com/book/en/v2/Git-Basics-Getting-a-Git-Repository" class="uri">https://git-scm.com/book/en/v2/Git-Basics-Getting-a-Git-Repository</a></li>
@@ -221,12 +223,42 @@ if (!require(&quot;remotes&quot;, quietly = TRUE))
 if (!require(&quot;ReLTER&quot;, quietly = TRUE))
   remotes::install_github(&quot;oggioniale/ReLTER&quot;)</code></pre>
 </div>
+<div id="loading-packages" class="section level2">
+<h2>Loading packages</h2>
+<p>After installing, we need to load the packages into this <code>R</code> session.</p>
+<pre class="r"><code># Convenient way to load list of packages
+pkg_list &lt;- c(&quot;sf&quot;, &quot;terra&quot;, &quot;ReLTER&quot;, &quot;tmap&quot;)
+lapply(pkg_list,require, character.only = TRUE)</code></pre>
+<pre><code>## Loading required package: terra</code></pre>
+<pre><code>## terra 1.5.21</code></pre>
+<pre><code>## Loading required package: tmap</code></pre>
+<pre><code>## [[1]]
+## [1] TRUE
+## 
+## [[2]]
+## [1] TRUE
+## 
+## [[3]]
+## [1] TRUE
+## 
+## [[4]]
+## [1] TRUE</code></pre>
+</div>
 <div id="markdown-versus-r-script" class="section level2">
 <h2>Markdown versus <code>R</code> script</h2>
 <ul>
 <li>Code is the same</li>
 <li>RMarkdown adds formatted text and outputs</li>
 <li>Perfect for reports and … demos</li>
+</ul>
+</div>
+<div id="rstudio-hints" class="section level2">
+<h2>RStudio hints</h2>
+<ul>
+<li>Always work in an R project</li>
+<li>Do <strong>not</strong> <code>setwd()</code></li>
+<li>Do <strong>not save workspace</strong> to <code>.Rdata</code></li>
+<li>Use Control+Shift+F10 often</li>
 </ul>
 </div>
 
