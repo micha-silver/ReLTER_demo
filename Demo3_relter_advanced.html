@@ -172,17 +172,102 @@ pre code {
 
 <div id="TOC">
 <ul>
+<li><a href="#dependency-on-deims-sdr">Dependency on DEIMS-SDR</a></li>
 <li><a href="#additional-functions">Additional functions</a></li>
-<li><a href="#metadata-examples">Metadata examples</a></li>
+<li><a href="#additional-plots">Additional plots</a></li>
 <li><a href="#spatial-examples">Spatial examples</a></li>
 </ul>
 </div>
 
+<div id="dependency-on-deims-sdr" class="section level2">
+<h2>Dependency on DEIMS-SDR</h2>
+<p><code>ReLTER</code> relies on the data entered into DEIMS-SDR. However there are:</p>
+<ul>
+<li>Multiple sites with similiar names</li>
+<li>Missing information</li>
+<li>Sites with no boundary polygon</li>
+</ul>
+<div id="first-example-the-kiskun-region-of-hungary" class="section level4">
+<h4>First example, the Kiskun region of Hungary</h4>
+<pre class="r"><code># Multiple sites in the KISKUN region of Hungary
+kiskun &lt;- get_ilter_generalinfo(country_name = &quot;Hungary&quot;,
+                              site_name = &quot;KISKUN&quot;)
+# How many sites?
+print(paste(&quot;In Kiskun region: &quot;, length(kiskun$title), &quot;sites&quot;))</code></pre>
+<pre><code>## [1] &quot;In Kiskun region:  8 sites&quot;</code></pre>
+<pre class="r"><code>(kiskun$title)</code></pre>
+<pre><code>## [1] &quot;Kiskun Forest Reserve Sites, KISKUN LTER - Hungary&quot;   
+## [2] &quot;VULCAN Kiskunsag, KISKUN LTER - Hungary&quot;              
+## [3] &quot;Kiskun Restoration Experiments, KISKUN LTER - Hungary&quot;
+## [4] &quot;Kiskun Site Network (Jedlik), KISKUN LTER - Hungary&quot;  
+## [5] &quot;KISKUN LTER - Hungary&quot;                                
+## [6] &quot;LTER Fulophaza Site, KISKUN LTER - Hungary&quot;           
+## [7] &quot;Bugac-Bocsa-Orgovany Site, KISKUN LTER - Hungary&quot;     
+## [8] &quot;Orgovany Site, KISKUN LTER - Hungary&quot;</code></pre>
+<pre class="r"><code># Which site? Bugac-Bocsa
+bugac_id &lt;- kiskun[7,]$uri
+bugac_details &lt;- get_site_info(bugac_id,&quot;Contacts&quot;)
+(bugac_details$generalInfo.siteManager[[1]][&#39;name&#39;])</code></pre>
+<pre><code>##          name
+## 1 Gábor Ónodi</code></pre>
+<pre class="r"><code># Site manager is available
+
+bugac_polygon &lt;- get_site_info(bugac_id, &quot;Boundaries&quot;)</code></pre>
+<pre><code>## 
+## ----
+## This site does not have boundaries uploaded to DEIMS-SDR.
+## Please verify in the site page: https://deims.org/609e5959-8cd8-44a0-ab42-eda521cd452a
+## ----</code></pre>
+<pre class="r"><code>str(bugac_polygon)</code></pre>
+<pre><code>## tibble [1 × 9] (S3: tbl_df/tbl/data.frame)
+##  $ title       : chr &quot;Bugac-Bocsa-Orgovany Site, KISKUN LTER - Hungary&quot;
+##  $ uri         : chr &quot;https://deims.org/609e5959-8cd8-44a0-ab42-eda521cd452a&quot;
+##  $ boundaries  : logi NA
+##  $ geoCoord    : chr &quot;POINT (19.5281 46.7183)&quot;
+##  $ country     :List of 1
+##   ..$ : chr &quot;Hungary&quot;
+##  $ geoElev.avg : int 112
+##  $ geoElev.min : int 105
+##  $ geoElev.max : int 120
+##  $ geoElev.unit: chr &quot;msl&quot;</code></pre>
+<pre class="r"><code># No geometry</code></pre>
+<ul>
+<li>This site has the site manager’s name</li>
+<li>but no boundary polygon</li>
+</ul>
+</div>
+<div id="second-example-gran-paradiso-in-italy" class="section level4">
+<h4>Second example, Gran Paradiso in Italy</h4>
+<pre class="r"><code>paradiso &lt;- get_ilter_generalinfo(country_name = &quot;Italy&quot;,
+                              site_name = &quot;Gran Paradiso&quot;)
+
+print(&quot;Gran Paradiso sites: &quot;)</code></pre>
+<pre><code>## [1] &quot;Gran Paradiso sites: &quot;</code></pre>
+<pre class="r"><code>(paradiso$title)</code></pre>
+<pre><code>## [1] &quot;IT23 - Gran Paradiso National Park - Italy&quot;
+## [2] &quot;Gran Paradiso National Park - Italy&quot;</code></pre>
+<pre class="r"><code># Choose the second
+paradiso_id &lt;- paradiso[2,]$uri
+paradiso_details &lt;- get_site_info(paradiso_id,&quot;Contacts&quot;)
+# Multiple names for metadata:
+paradiso_details$generalInfo.metadataProvider[[1]][&#39;name&#39;]</code></pre>
+<pre><code>##                 name
+## 1 Alessandro Oggioni
+## 2     Ramona Viterbi</code></pre>
+<pre class="r"><code># No funding agency
+paradiso_details$generalInfo.fundingAgency</code></pre>
+<pre><code>## [1] NA</code></pre>
+<ul>
+<li>This site has metadata providers</li>
+<li>but no funding agency</li>
+</ul>
+</div>
+</div>
 <div id="additional-functions" class="section level2">
 <h2>Additional functions</h2>
 </div>
-<div id="metadata-examples" class="section level2">
-<h2>Metadata examples</h2>
+<div id="additional-plots" class="section level2">
+<h2>Additional plots</h2>
 </div>
 <div id="spatial-examples" class="section level2">
 <h2>Spatial examples</h2>

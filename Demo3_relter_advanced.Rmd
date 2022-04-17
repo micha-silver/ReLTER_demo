@@ -17,15 +17,65 @@ pkg_list <- c("sf", "terra", "ReLTER", "tmap")
 lapply(pkg_list,require, character.only = TRUE)
 ```
 
+## Dependency on DEIMS-SDR
+
+`ReLTER` relies on the data entered into DEIMS-SDR. However there are:
+
+ - Multiple sites with similiar names
+ - Missing information
+ - Sites with no boundary polygon
+ 
+#### First example, the Kiskun region of Hungary
+
+```{r missing-data}
+# Multiple sites in the KISKUN region of Hungary
+kiskun <- get_ilter_generalinfo(country_name = "Hungary",
+                              site_name = "KISKUN")
+# How many sites?
+print(paste("In Kiskun region: ", length(kiskun$title), "sites"))
+(kiskun$title)
+# Which site? Bugac-Bocsa
+bugac_id <- kiskun[7,]$uri
+bugac_details <- get_site_info(bugac_id,"Contacts")
+(bugac_details$generalInfo.siteManager[[1]]['name'])
+# Site manager is available
+
+bugac_polygon <- get_site_info(bugac_id, "Boundaries")
+str(bugac_polygon)
+# No geometry
+```
+ - This site has the site manager's name
+ - but no boundary polygon
+ 
+#### Second example, Gran Paradiso in Italy
+
+```{r similar-names}
+paradiso <- get_ilter_generalinfo(country_name = "Italy",
+                              site_name = "Gran Paradiso")
+(paradiso$title)
+
+# Choose the second
+paradiso_id <- paradiso[2,]$uri
+paradiso_details <- get_site_info(paradiso_id,"Contacts")
+# Multiple names for metadata:
+paradiso_details$generalInfo.metadataProvider[[1]]['name']
+# No funding agency
+paradiso_details$generalInfo.fundingAgency
+```
+ - This site has metadata providers
+ - but no funding agency
+
+ 
+
 ## Additional functions
 
 ```{r chaining}
 
 ```
 
-## Metadata examples 
+## Additional plots
 
-```{r metadata}
+```{r waffle}
 
 ```
 

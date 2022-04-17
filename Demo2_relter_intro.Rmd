@@ -33,10 +33,10 @@ ls("package:ReLTER")
 
 #### Categories
 
- - network functions
- - site specific functions
- - metadata functions
- - taxonomy functions
+  - site specific functions
+  - network functions
+  - metadata functions
+  - taxonomy functions
  
 ## Examples
 
