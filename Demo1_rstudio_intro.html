@@ -172,31 +172,48 @@ pre code {
 
 <div id="TOC">
 <ul>
-<li><a href="#some-online-resources">Some online resources</a></li>
 <li><a href="#beginning-with-rstudio-and-git">Beginning with Rstudio and git</a></li>
 <li><a href="#where-to-get-r-packages">Where to get <code>R</code> packages</a></li>
 <li><a href="#loading-packages">Loading packages</a></li>
-<li><a href="#markdown-versus-r-script">Markdown versus <code>R</code> script</a></li>
-<li><a href="#rstudio-hints">RStudio hints</a></li>
 </ul>
 </div>
 
-<div id="some-online-resources" class="section level2">
-<h2>Some online resources</h2>
+<div id="beginning-with-rstudio-and-git" class="section level2">
+<h2>Beginning with Rstudio and git</h2>
+<div id="some-online-resources" class="section level4">
+<h4>Some online resources</h4>
 <ul>
 <li>R for Data Science: <a href="https://r4ds.had.co.nz/index.html" class="uri">https://r4ds.had.co.nz/index.html</a></li>
 <li>Geocomputation with R: <a href="https://geocompr.robinlovelace.net/" class="uri">https://geocompr.robinlovelace.net/</a></li>
 <li>Rseek: <a href="https://rseek.org/" class="uri">https://rseek.org/</a></li>
 </ul>
 </div>
-<div id="beginning-with-rstudio-and-git" class="section level2">
-<h2>Beginning with Rstudio and git</h2>
-<p>Start a new package <strong>based on a git repo</strong> Encourages collaboration “out of the box”.</p>
+<div id="start-a-new-package-based-on-a-git-repo." class="section level4">
+<h4>Start a new package <strong>based on a git repo</strong>.</h4>
+<p>Encourages collaboration “out of the box”.</p>
 <p>Basics of git:</p>
 <ul>
 <li><a href="https://git-scm.com/book/en/v2/Git-Basics-Getting-a-Git-Repository" class="uri">https://git-scm.com/book/en/v2/Git-Basics-Getting-a-Git-Repository</a></li>
 <li><a href="https://r-bio.github.io/intro-git-rstudio/" class="uri">https://r-bio.github.io/intro-git-rstudio/</a></li>
 </ul>
+</div>
+<div id="rstudio-hints" class="section level4">
+<h4>RStudio hints</h4>
+<ul>
+<li>Always work in an R project</li>
+<li>Do <strong>not</strong> <code>setwd()</code></li>
+<li>Do <strong>not save workspace</strong> to <code>.Rdata</code></li>
+<li>Use Control+Shift+F10 often</li>
+</ul>
+</div>
+<div id="markdown-versus-r-script" class="section level4">
+<h4>Markdown versus <code>R</code> script</h4>
+<ul>
+<li>Code is the same</li>
+<li>RMarkdown adds formatted text and outputs</li>
+<li>Perfect for reports and … demos</li>
+</ul>
+</div>
 </div>
 <div id="where-to-get-r-packages" class="section level2">
 <h2>Where to get <code>R</code> packages</h2>
@@ -243,23 +260,6 @@ lapply(pkg_list,require, character.only = TRUE)</code></pre>
 ## 
 ## [[4]]
 ## [1] TRUE</code></pre>
-</div>
-<div id="markdown-versus-r-script" class="section level2">
-<h2>Markdown versus <code>R</code> script</h2>
-<ul>
-<li>Code is the same</li>
-<li>RMarkdown adds formatted text and outputs</li>
-<li>Perfect for reports and … demos</li>
-</ul>
-</div>
-<div id="rstudio-hints" class="section level2">
-<h2>RStudio hints</h2>
-<ul>
-<li>Always work in an R project</li>
-<li>Do <strong>not</strong> <code>setwd()</code></li>
-<li>Do <strong>not save workspace</strong> to <code>.Rdata</code></li>
-<li>Use Control+Shift+F10 often</li>
-</ul>
 </div>
 
 

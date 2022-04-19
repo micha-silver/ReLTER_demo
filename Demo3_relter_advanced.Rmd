@@ -3,18 +3,17 @@ title: "ReLTER - Advanced use"
 author: "Micha Silver"
 date: "13/04/2022"
 output:
-  html_document:
+    html_document:
     toc: true
     theme: united
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-```
-
-```{r packages, echo=FALSE, include=FALSE}
 pkg_list <- c("sf", "terra", "ReLTER", "tmap")
 lapply(pkg_list,require, character.only = TRUE)
+tmap_options(check.and.fix = TRUE)
+tmap_mode("view")
 ```
 
 ## Dependency on DEIMS-SDR
@@ -62,21 +61,73 @@ paradiso_details$generalInfo.metadataProvider[[1]]['name']
 # No funding agency
 paradiso_details$generalInfo.fundingAgency
 ```
+
  - This site has metadata providers
  - but no funding agency
 
- 
 
-## Additional functions
+## Acquiring Earth Observation data
 
-```{r chaining}
+Functions within ReLTER help to acquire certain Earth Observation datasets. The `get_site_ODS` function give `ReLTER` users access to the OpenDataScience Europe (ODS) archive (https://maps.opendatascience.eu/) with landcover, NDVI, natura2000 all at 30 meter pixel resolution. The Cropping to site boundaries is done in the cloud, and due to the Cloud Optimized Geotiff (COG) format, downloads are quite small. 
 
+#### First example, Kis-Balaton site in Kiskun region, Hungary
+
+```{r kis-balaton}
+# Get DEIMS ID for Kis-Balaton site 
+kis_balaton <- get_ilter_generalinfo(country_name = "Hungary",
+                              site_name = "Kis-Balaton")
+kb_id = kis_balaton$uri
+kb_polygon = get_site_info(kb_id, "Boundaries")
+
+# Now acquire landcover and NDVI from OSD
+kb_landcover = get_site_ODS(kb_id, dataset = "landcover")
+kb_ndvi_summer = get_site_ODS(kb_id, "ndvi_summer")
+
+# Plot maps
+tm_basemap() + 
+  tm_shape(kb_polygon) +
+  tm_borders(col = "purple") + 
+  tm_shape(kb_ndvi_summer) +
+  tm_raster(alpha=0.7, palette = "RdYlGn")
+
+tm_basemap() + 
+  tm_shape(kb_polygon) +
+  tm_borders(col = "purple") + 
+  tm_shape(kb_landcover) +
+  tm_raster(alpha=0.7, palette = "Set1")
 ```
 
-## Additional plots
+#### Second example, Companhia das Lezírias, Portugal
+
+```{r companhia}
+lezirias <- get_ilter_generalinfo(country_name = "Portugal",
+                              site_name = "Companhia")
+lezirias_id = lezirias$uri
+lezirias_polygon = get_site_info(lezirias_id, "Boundaries")
+
+# Now acquire spring NDVI from OSD
+lezirias_ndvi_spring = get_site_ODS(lezirias_id, "ndvi_spring")
+
+# Plot maps
+tm_basemap() + 
+  tm_shape(lezirias_polygon) +
+  tm_borders(col = "purple") + 
+  tm_shape(lezirias_ndvi_spring) +
+  tm_raster(alpha=0.7, palette = "RdYlGn")
+
+# The function outputs a raster. We can save to Geotiff for use in other GIS
+class(lezirias_ndvi_spring)
+writeRaster(x = lezirias_ndvi_spring,
+            filename = "lezirias_ndvi_spring.tif",
+            overwrite = TRUE)
+```
+
+ 
+
+## Additional plotting functions
+
 
 ```{r waffle}
 
 ```
 
-## Spatial examples
