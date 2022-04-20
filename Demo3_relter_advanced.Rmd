@@ -8,9 +8,9 @@ output:
     theme: united
 ---
 
-[Back to TOC](index.html)
+<!-- [Back to TOC](index.html) -->
 
-```{r setup, include=FALSE}
+```{r setup3, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 pkg_list <- c("sf", "terra", "ReLTER", "tmap")
 lapply(pkg_list,require, character.only = TRUE)
@@ -36,12 +36,19 @@ kiskun <- get_ilter_generalinfo(country_name = "Hungary",
                               site_name = "KISKUN")
 # How many sites?
 print(paste("In Kiskun region: ", length(kiskun$title), "sites"))
+```
+
+----
+
+```{r missing-data2}
 (kiskun$title)
 # Which site? Bugac-Bocsa
 bugac_id <- kiskun[7,]$uri
 bugac_details <- get_site_info(bugac_id,"Contacts")
 (bugac_details$generalInfo.siteManager[[1]]['name'])
 ```
+
+----
 
 Now query for boundary
 
@@ -54,6 +61,8 @@ str(bugac_polygon)
  - This site has the site manager's name
  - but no boundary polygon
  
+----
+
 #### Second example, Gran Paradiso in Italy
 
 ```{r similar-names}
@@ -66,7 +75,12 @@ paradiso_id <- paradiso[2,]$uri
 paradiso_details <- get_site_info(paradiso_id,"Contacts")
 # Multiple names for metadata:
 paradiso_details$generalInfo.metadataProvider[[1]]['name']
-# No funding agency
+```
+
+----
+
+```{r similar-names2}
+# But what about funding agency
 paradiso_details$generalInfo.fundingAgency
 ```
 
@@ -77,6 +91,8 @@ paradiso_details$generalInfo.fundingAgency
 ## Acquiring Earth Observation data
 
 Functions within ReLTER help to acquire certain Earth Observation datasets. The `get_site_ODS()` function offers to `ReLTER` users access to the OpenDataScience Europe (ODS) archive (https://maps.opendatascience.eu/) with landcover, NDVI, natura2000 all at 30 meter pixel resolution. Cropping to site boundaries is done in the cloud, and due to the Cloud Optimized Geotiff (COG) format, downloads are quite small. 
+
+----
 
 #### First example, Kis-Balaton site in Kiskun region, Hungary
 
@@ -90,20 +106,29 @@ kb_polygon = get_site_info(kb_id, "Boundaries")
 # Now acquire landcover and NDVI from OSD
 kb_landcover = get_site_ODS(kb_id, dataset = "landcover")
 kb_ndvi_summer = get_site_ODS(kb_id, "ndvi_summer")
+```
 
+----
+
+```{r kis-balaton2}
 # Plot maps
 tm_basemap() + 
   tm_shape(kb_polygon) +
   tm_borders(col = "purple") + 
   tm_shape(kb_ndvi_summer) +
   tm_raster(alpha=0.7, palette = "RdYlGn")
-
+```
+----
+ 
+```{r kis-balaton3}
 tm_basemap() + 
   tm_shape(kb_polygon) +
   tm_borders(col = "purple") + 
   tm_shape(kb_landcover) +
   tm_raster(alpha=0.7, palette = "Set1")
 ```
+
+----
 
 #### Second example, Companhia das Lezírias, Portugal
 
@@ -115,7 +140,11 @@ lezirias_polygon = get_site_info(lezirias_id, "Boundaries")
 
 # Now acquire spring NDVI from OSD
 lezirias_ndvi_spring = get_site_ODS(lezirias_id, "ndvi_spring")
+```
 
+----
+
+```{r companhia2}
 # Plot maps
 tm_basemap() + 
   tm_shape(lezirias_polygon) +
@@ -131,13 +160,13 @@ writeRaster(x = lezirias_ndvi_spring,
 ```
 
  
-
 ## Additional plotting functions
-
 
 #### Environmental parameters
 
 `ReLTER` has implemented some revealing visualizations of the various parameters collected at LTER sites. One visualization is the pie chart of environmental parameters.
+
+----
 
 In an example above the DEIMS ID of Kis Balaton (Kiskun LTER) was found. We'll use that site to show a pie chart of environmental variables collected in that site.
 
@@ -145,11 +174,15 @@ In an example above the DEIMS ID of Kis Balaton (Kiskun LTER) was found. We'll u
 produce_site_parameters_pie(kb_id)
 ```
 
+----
+
 Similarly, a "waffle" chart can be produced.
 
 ```{r waffle-params}
 produce_site_parameters_waffle(kb_id)
 ```
+
+----
 
 #### Research topics, Related resources
 
@@ -167,21 +200,37 @@ ecosystem_items <- grepl(pattern = "ecosystem",
                          fixed = TRUE)
 # Here is the filtered list
 slv_research_topics[ecosystem_items,]
+```
 
-# List related resources
+----
+
+#### List related resources
+```{r related-resources}
 get_network_related_resources(lter_slovakia_id)
 ```
 
-#### Show a map of sites in a network
+----
 
-This example uses the LTER network in Greece
+#### Show a chaining of several functions
 
-The `produce_network_points_map()` function requires both DEIMS network ID and the three letter ISO code for the country to be mapped.
+This example uses the LTER network in Greece. Call the `produce_network_points_map()` function (requires both DEIMS network ID and the three letter ISO code for the country to be mapped) to get all sites in a country.
 
-```{r network-map}
+```{r network-map3}
 lter_greece_id = "https://deims.org/networks/83453a6c-792d-4549-9dbb-c17ced2e0cc3"
-produce_network_points_map(lter_greece_id, "GRC")
+lter_greece <- produce_network_points_map(lter_greece_id, "GRC")
+grc <- readRDS("gadm36_GRC_0_sp.rds")  # available from `produce_network_points_map()
 ```
 
+----
 
-[Back to TOC](index.html)
+```{r network-map4}
+tm_basemap("OpenStreetMap.Mapnik") + 
+  tm_shape(lter_greece) + 
+  tm_dots(col = "blue", size=0.08) +
+  tm_shape(grc) + 
+  tm_borders(col = "purple", lwd=2) +
+  tm_grid(alpha = 0.4) +
+  tm_scale_bar(position = c("right", "bottom"))
+```
+
+<!-- [Back to TOC](index.html) -->

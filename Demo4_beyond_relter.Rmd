@@ -8,13 +8,10 @@ output:
     theme: united
 ---
 
-[Back to TOC](index.html)
+<!-- [Back to TOC](index.html) -->
 
-```{r setup, include=FALSE}
+```{r setup4, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-```
-
-```{r packages, echo=FALSE, include=FALSE}
 pkg_list <- c("sf", "terra", "ReLTER", "tmap")
 lapply(pkg_list,require, character.only = TRUE)
 ```
@@ -24,17 +21,21 @@ lapply(pkg_list,require, character.only = TRUE)
 ```{r saving}
 ```
 
+----
+
 ## Plotting with other data
 
 ```{r plotting}
 ```
 
-## Time series
+----
+
 
 ## Future plans
  - Acquire MODIS products
+   * Time series
  - Acquire species distribution from GBIF: https://www.gbif.org/dataset/search
  - Acquire high resolution landcover data from ESA Worldcover: https://esa-worldcover.org/
  
 
-[Back to TOC](index.html)
+<!-- [Back to TOC](index.html) -->

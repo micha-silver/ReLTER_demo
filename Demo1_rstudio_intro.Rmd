@@ -8,16 +8,16 @@ output:
     theme: united
 ---
 
-[Back to TOC](index.html)
+<!-- [Back to TOC](index.html) -->
 
-```{r setup, include=FALSE}
+```{r setup1, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
 ## This Demo
 
-  - R markdown: clone from https://github.com/micha-silver/ReLTER_demo
-  - Documents on website: https://micha-silver.github.io/index.html
+  - Rmarkdown: cloned from https://github.com/micha-silver/ReLTER_demo
+  - Slides on website: https://micha-silver.github.io/index.html
   - Youtube videos: 
 
 ## Beginning with Rstudio and git
@@ -26,20 +26,21 @@ knitr::opts_chunk$set(echo = TRUE)
 
 Encourages collaboration "out of the box".
 
-
 ![New Project -> Version Control](./new_project.png)
+----
 
-Basics of git:
+#### Basics of git:
 
   - https://git-scm.com/book/en/v2/Git-Basics-Getting-a-Git-Repository
   - https://r-bio.github.io/intro-git-rstudio/
+  
+----
   
 #### Some online resources
  - R for Data Science: https://r4ds.had.co.nz/index.html 
  - Geocomputation with R: https://geocompr.robinlovelace.net/
  - Rseek: https://rseek.org/
  
-
 
 #### RStudio hints
 
@@ -53,13 +54,15 @@ Basics of git:
  - RMarkdown adds formatted text and outputs
  - Perfect for reports and ... demos
 
-  
+
 ## Where to get `R` packages
  
  - CRAN: https://cran.r-project.org/
  - BioConductor: https://www.bioconductor.org/install/
  - Packages developed on github, i.e. `ReLTER`
  
+----
+
 ```{r packages, message=FALSE}
 # Install some standard spatial packages from CRAN
 if (!require("sf", quietly = TRUE))
@@ -70,7 +73,11 @@ if (!require("BiocManager", quietly = TRUE))
   install.packages("BiocManager")
 BiocManager::install()
 BiocManager::install("EBImage")
+```
 
+----
+
+```{r from-github}
 # Install development package from github
 if (!require("remotes", quietly = TRUE))
   install.packages("remotes")
@@ -78,6 +85,7 @@ if (!require("remotes", quietly = TRUE))
 if (!require("ReLTER", quietly = TRUE))
   remotes::install_github("oggioniale/ReLTER")
 ``` 
+
 ## Loading packages
 
 After installing, we need to load the packages into this `R` session.
@@ -88,6 +96,6 @@ pkg_list <- c("sf", "terra", "ReLTER", "tmap")
 lapply(pkg_list,require, character.only = TRUE)
 ```
 
-[Back to TOC](index.html)
+<!-- [Back to TOC](index.html) -->
 
 
