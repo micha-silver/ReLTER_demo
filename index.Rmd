@@ -1,0 +1,25 @@
+---
+title: "Table of Contents"
+author: "Micha Silver"
+date: "20/04/2022"
+output:
+  html_document:
+    toc: true
+    theme: united
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Initial setup
+[initial setup](Demo1_rstudio_intro.html)
+
+## Introducing the `ReLTER` package
+[ReLTER](Demo2_relter_intro.html)
+
+## Advanced functions in `ReLTER`
+[Advanced](Demo3_relter_advanced.html)
+
+## Beyond `ReLTER`
+[Beyond](Demo4_beyond_relter.html)

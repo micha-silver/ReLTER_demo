@@ -8,6 +8,8 @@ output:
     theme: united
 ---
 
+[Back to TOC](index.html)
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
@@ -33,3 +35,6 @@ lapply(pkg_list,require, character.only = TRUE)
  - Acquire MODIS products
  - Acquire species distribution from GBIF: https://www.gbif.org/dataset/search
  - Acquire high resolution landcover data from ESA Worldcover: https://esa-worldcover.org/
+ 
+
+[Back to TOC](index.html)

@@ -8,9 +8,12 @@ output:
     theme: united
 ---
 
+[Back to TOC](index.html)
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
+
 
 ## Beginning with Rstudio and git
 
@@ -76,6 +79,6 @@ pkg_list <- c("sf", "terra", "ReLTER", "tmap")
 lapply(pkg_list,require, character.only = TRUE)
 ```
 
-
+[Back to TOC](index.html)
 
 

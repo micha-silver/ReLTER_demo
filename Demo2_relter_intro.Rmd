@@ -8,6 +8,8 @@ output:
     theme: united
 ---
 
+[Back to TOC](index.html)
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 # Convenient way to load list of packages
@@ -94,7 +96,11 @@ network_research_topics <- get_network_research_topics(lter_slovakia_id)
 head(network_research_topics$researchTopicsLabel, 20)
 network_sites <- get_network_sites(lter_slovakia_id)
 network_sites$title
+```
 
+#### Show map of network
+
+```{r network-map}
 lter_slovakia <- produce_network_points_map(lter_slovakia_id, "SVK")
 # The country border is available after running produce_network_points_map()
 svk <- readRDS("gadm36_SVK_0_sp.rds")
@@ -107,3 +113,4 @@ tm_basemap() +
   tm_scale_bar(position = c("right", "bottom"))
 ```
 
+[Back to TOC](index.html)

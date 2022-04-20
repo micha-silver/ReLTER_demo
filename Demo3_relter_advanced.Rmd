@@ -8,6 +8,8 @@ output:
     theme: united
 ---
 
+[Back to TOC](index.html)
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 pkg_list <- c("sf", "terra", "ReLTER", "tmap")
@@ -127,7 +129,53 @@ writeRaster(x = lezirias_ndvi_spring,
 ## Additional plotting functions
 
 
-```{r waffle}
+#### Environmental parameters
 
+`ReLTER` has implemented some revealing visualizations of the various parameters collected at LTER sites. One visualization is the pie chart of environmental parameters.
+
+In an example above the DEIMS ID of Kis Balaton (Kiskun LTER) was found. We'll use that site to show a pie chart of environmental variables collected in that site.
+
+```{r pie-params}
+produce_site_parameters_pie(kb_id)
 ```
 
+Similarly, a "waffle" chart can be produced.
+
+```{r waffle-params}
+produce_site_parameters_waffle(kb_id)
+```
+
+#### Research topics, Related resources
+
+List all research topics throughout an LTER network.
+
+List related resources for an LTER network.
+
+We demonstrate with the LTER network in Slovakia. Then filter for "Ecosystem" research.
+
+```{r research-topics}
+lter_slovakia_id <- "https://deims.org/networks/3d6a8d72-9f86-4082-ad56-a361b4cdc8a0"
+slv_research_topics <- get_network_research_topics(lter_slovakia_id)
+ecosystem_items <- grepl(pattern = "ecosystem",
+                         slv_research_topics$researchTopicsLabel,
+                         fixed = TRUE)
+# Here is the filtered list
+slv_research_topics[ecosystem_items,]
+
+# List related resources
+get_network_related_resources(lter_slovakia_id)
+```
+
+#### Show a map of sites in a network
+
+This example uses the LTER network in Greece
+
+The `produce_network_points_map()` function requires both DEIMS network ID and the three letter ISO code for the country to be mapped.
+
+```{r network-map}
+lter_greece_id = "https://deims.org/networks/83453a6c-792d-4549-9dbb-c17ced2e0cc3"
+produce_network_points_map(lter_greece_id, "GRC")
+```
+
+
+[Back to TOC](index.html)
