@@ -44,8 +44,8 @@ ls("package:ReLTER")
 
 Search for DEIMS ID for a particular site. The function `get_ilter_generalinfo` allows to search by country name and site name.
 
+For the first example, get the DEIMS ID for Hohe Tauern in Austria
 ```{r example1}
-# Hohe Tauern National Park
 hohe = get_ilter_generalinfo(country_name = "Austria",
                               site_name = "Hohe Tauern")
 (hohe_id = hohe$uri)
@@ -62,9 +62,9 @@ tm_basemap() +
 
 #### Retrieve metadata about a site. 
 
-```{r example2}
-#In this example Loch Kinord in Scotland. 
+This example retrieves metadata from Lock Kinord in Scotland.
 
+```{r example2}
 loch_kinord <- get_ilter_generalinfo(country_name = "United K",
                               site_name = "Loch Kinord")
 (loch_kinord_id = loch_kinord$uri)
@@ -84,10 +84,11 @@ print(paste("GeoBonBiome:",
             loch_kinord_details$envCharacteristics.geoBonBiome[[1]]))
 print("Parameters:")
 (loch_kinord_details$parameter[[1]]['parameterLabel'])
-
 ```
 
-#### Query a network, The LTER network in Slovakia
+#### Query a network
+
+The LTER network in Slovakia
 
 ```{r example3}
 lter_slovakia_id = "https://deims.org/networks/3d6a8d72-9f86-4082-ad56-a361b4cdc8a0"
@@ -98,7 +99,7 @@ network_sites <- get_network_sites(lter_slovakia_id)
 network_sites$title
 ```
 
-#### Show map of network
+#### Show map of sites in the network
 
 ```{r network-map}
 lter_slovakia <- produce_network_points_map(lter_slovakia_id, "SVK")

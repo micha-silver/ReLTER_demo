@@ -28,6 +28,8 @@ tmap_mode("view")
  
 #### First example, the Kiskun region of Hungary
 
+Query for Site Manager
+
 ```{r missing-data}
 # Multiple sites in the KISKUN region of Hungary
 kiskun <- get_ilter_generalinfo(country_name = "Hungary",
@@ -39,12 +41,16 @@ print(paste("In Kiskun region: ", length(kiskun$title), "sites"))
 bugac_id <- kiskun[7,]$uri
 bugac_details <- get_site_info(bugac_id,"Contacts")
 (bugac_details$generalInfo.siteManager[[1]]['name'])
-# Site manager is available
+```
 
+Now query for boundary
+
+```{r missing_boundary}
 bugac_polygon <- get_site_info(bugac_id, "Boundaries")
 str(bugac_polygon)
 # No geometry
 ```
+
  - This site has the site manager's name
  - but no boundary polygon
  
@@ -70,7 +76,7 @@ paradiso_details$generalInfo.fundingAgency
 
 ## Acquiring Earth Observation data
 
-Functions within ReLTER help to acquire certain Earth Observation datasets. The `get_site_ODS` function give `ReLTER` users access to the OpenDataScience Europe (ODS) archive (https://maps.opendatascience.eu/) with landcover, NDVI, natura2000 all at 30 meter pixel resolution. The Cropping to site boundaries is done in the cloud, and due to the Cloud Optimized Geotiff (COG) format, downloads are quite small. 
+Functions within ReLTER help to acquire certain Earth Observation datasets. The `get_site_ODS()` function offers to `ReLTER` users access to the OpenDataScience Europe (ODS) archive (https://maps.opendatascience.eu/) with landcover, NDVI, natura2000 all at 30 meter pixel resolution. Cropping to site boundaries is done in the cloud, and due to the Cloud Optimized Geotiff (COG) format, downloads are quite small. 
 
 #### First example, Kis-Balaton site in Kiskun region, Hungary
 
