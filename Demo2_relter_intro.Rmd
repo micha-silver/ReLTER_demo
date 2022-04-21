@@ -84,16 +84,21 @@ print(paste("Site manager:",
 ----
 
 ```{r example2b}
-print("Metadata contact:")
+# Metadata contact:
 (loch_kinord_details$generalInfo.metadataProvider[[1]]['name'])
 print(paste("Average air temperature:",
             loch_kinord_details$envCharacteristics.airTemperature.avg))
 print(paste("Annual precipitation:",
             loch_kinord_details$envCharacteristics.precipitation.annual))
+```
+
+----
+
+```{r example2c}
 print(paste("GeoBonBiome:",
             loch_kinord_details$envCharacteristics.geoBonBiome[[1]]))
-print("Parameters:")
-(loch_kinord_details$parameter[[1]]['parameterLabel'])
+# Parameters:"
+head(loch_kinord_details$parameter[[1]]['parameterLabel'], 12)
 ```
 
 ----

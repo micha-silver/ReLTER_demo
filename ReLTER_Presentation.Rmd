@@ -5,6 +5,8 @@ date: "20/04/2022"
 output:
   ioslides_presentation:
     smaller: true
+    logo: eLTER_logo_small.png
+    css: styles.css
 ---
 
 ```{r child="Demo1_rstudio_intro.Rmd"}
