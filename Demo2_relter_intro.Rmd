@@ -27,7 +27,7 @@ maintainer("ReLTER")
 citation("ReLTER")
 ```
 
-## Basic functions
+#### Basic functions
 
 ```{r functions}
 ls("package:ReLTER")
@@ -44,28 +44,29 @@ ls("package:ReLTER")
  
 ## Examples
 
-Search for DEIMS ID for a particular site. The function `get_ilter_generalinfo` allows to search by country name and site name.
+Search for DEIMS ID for a particular site. The function `get_ilter_generalinfo` allows to search by country name and site name. Then `get_site_info()` obtains various metadata about a chosen site.
 
-For the first example, get the DEIMS ID for Hohe Tauern in Austria
+#### For the first example, the Doñana LTSER Platform in Spain
+
 ```{r example1}
-hohe = get_ilter_generalinfo(country_name = "Austria",
-                              site_name = "Hohe Tauern")
-(hohe_id = hohe$uri)
+donana = get_ilter_generalinfo(country_name = "Spain",
+                              site_name = "Doñana")
+(donana_id = donana$uri)
 ```
 
 ----
 
-#### Plot a basic map of that site. We use the `tmap` package for viewing maps.
+Plot a basic map of that site. We use the `tmap` package for viewing maps.
 
 ```{r plot-site}
-hohe_polygon <- get_site_info(hohe_id, category = "Boundaries")
+donana_polygon <- get_site_info(donana_id, category = "Boundaries")
 tm_basemap() + 
-  tm_shape(hohe_polygon) +
+  tm_shape(donana_polygon) +
   tm_fill(col = "blue", alpha = 0.3)
 ```
 ---- 
 
-#### Retrieve metadata about a site. 
+#### Next example: Retrieve metadata about a site. 
 
 This example retrieves metadata from Lock Kinord in Scotland.
 
@@ -103,7 +104,7 @@ head(loch_kinord_details$parameter[[1]]['parameterLabel'], 12)
 
 ----
 
-#### Query a network
+#### Next example: Query a network
 
 The LTER network in Slovakia
 
@@ -117,8 +118,8 @@ head(network_research_topics$researchTopicsLabel, 20)
 ----
 
 ```{r example3b}
-network_sites <- get_network_sites(lter_slovakia_id)
-network_sites$title
+lter_slovakia_sites <- get_network_sites(lter_slovakia_id)
+lter_slovakia_sites$title
 ```
 
 ----
@@ -127,12 +128,12 @@ network_sites$title
 
 ```{r network-map2}
 lter_slovakia <- produce_network_points_map(lter_slovakia_id, "SVK")
-svk <- readRDS("gadm36_SVK_0_sp.rds")  # from running produce_network_points_map()
+svk <- readRDS("gadm36_SVK_0_sp.rds")  # downloaded by produce_network_points_map()
 tm_basemap() + 
   tm_shape(lter_slovakia) + 
   tm_dots(col = "blue", size=0.04) +
   tm_shape(svk) + 
-  tm_borders(col = "purple") +
+  tm_borders(col = "purple", lwd = 0.6) +
   tm_grid(alpha = 0.4) +
   tm_scale_bar(position = c("right", "bottom"))
 ```

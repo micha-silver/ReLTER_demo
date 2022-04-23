@@ -18,7 +18,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
   - Rmarkdown: cloned from https://github.com/micha-silver/ReLTER_demo
   - Slides on website: https://micha-silver.github.io/index.html
-  - Youtube videos: 
+  - Youtube videos: (*to be announced*)
 
 ## Beginning with Rstudio and git
 

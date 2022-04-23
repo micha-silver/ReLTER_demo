@@ -20,7 +20,7 @@ tmap_mode("view")
 
 ## Dependency on DEIMS-SDR
 
-`ReLTER` relies on the data entered into DEIMS-SDR. However there are:
+`ReLTER` relies on the data entered into DEIMS-SDR. However sometimes there are:
 
  - Multiple sites with similiar names
  - Missing information
@@ -90,7 +90,7 @@ paradiso_details$generalInfo.fundingAgency
 
 ## Acquiring Earth Observation data
 
-Functions within ReLTER help to acquire certain Earth Observation datasets. The `get_site_ODS()` function offers to `ReLTER` users access to the OpenDataScience Europe (ODS) archive (https://maps.opendatascience.eu/) with landcover, NDVI, natura2000 all at 30 meter pixel resolution. Cropping to site boundaries is done in the cloud, and due to the Cloud Optimized Geotiff (COG) format, downloads are quite small. 
+Functions within ReLTER help to acquire certain Earth Observation datasets. The `get_site_ODS()` function offers to `ReLTER` users access to the OpenDataScience Europe (ODS) archive (https://maps.opendatascience.eu/) with landcover, NDVI, natura2000, Corine landcover, and OSM features, all at 30 meter pixel resolution. Cropping to site boundaries is done in the cloud, and due to the Cloud Optimized Geotiff (COG) format, downloads are quite small. 
 
 ----
 
@@ -103,7 +103,7 @@ kis_balaton <- get_ilter_generalinfo(country_name = "Hungary",
 kb_id = kis_balaton$uri
 kb_polygon = get_site_info(kb_id, "Boundaries")
 
-# Now acquire landcover and NDVI from OSD
+# Now acquire landcover and NDVI from ODS
 kb_landcover = get_site_ODS(kb_id, dataset = "landcover")
 kb_ndvi_summer = get_site_ODS(kb_id, "ndvi_summer")
 ```
@@ -170,7 +170,7 @@ writeRaster(x = lezirias_ndvi_spring,
 
 In an example above the DEIMS ID of Kis Balaton (Kiskun LTER) was found. We'll use that site to show a pie chart of environmental variables collected in that site.
 
-```{r pie-params}
+```{r pie-params, warning=FALSE, message=FALSE}
 produce_site_parameters_pie(kb_id)
 ```
 
@@ -178,7 +178,7 @@ produce_site_parameters_pie(kb_id)
 
 Similarly, a "waffle" chart can be produced.
 
-```{r waffle-params}
+```{r waffle-params, warning=FALSE, message=FALSE}
 produce_site_parameters_waffle(kb_id)
 ```
 

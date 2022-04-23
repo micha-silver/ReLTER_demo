@@ -18,11 +18,47 @@ lapply(pkg_list,require, character.only = TRUE)
 
 ## What can be done with ReLTER outputs 
 
+Each function returns an `R` object
+
+ - Site metadata and info returned as a `tibble`
+    * save as an `R` dataset (keeps R stucture), or
+    * save to csv file
+ - Boundaries are returned as an `sf` spatial vector layer.
+    * save to a shapefile, or geopackage
+ - EO data are returned as a `SpatRaster` object (from the `terra` package)
+    * save as geotiff
+
+----
+
+#### Example from the TERENO Harz site in Germany
+
 ```{r saving}
+harz = get_ilter_generalinfo(country_name = "Spain",
+                              site_name = "Doñana")
+harz_id = harz$uri
+harz_polygon <- get_site_info(harz_id, category = "Boundaries")
+harz_meta <-  get_site_info(harz_id,
+                          c("Affiliations", "Contacts", "Parameters"))
+# Get the Corine landcover from ODS
+harz_clc <- get_site_ODS(harz_id, "clc2018")
 ```
 
 ----
 
+Save data and spatial layers for use later, or in other GIS software
+
+```{r saving2}
+# For this demo, save to temporary directory
+output_dir = tempdir()
+saveRDS(harz_meta, file.path(output_dir, "Harz_metadat.Rds"))
+# Remove extra columns from polygon
+harz_polygon <- harz_polygon[,c("title", "boundaries", "geoCoord", "geoElev.avg")]
+st_write(harz_polygon,
+         file.path(output_dir, "Harz_polygon.gpkg"), append=FALSE)
+writeRaster(harz_clc,
+            file.path(output_dir, "Harz_Corine2018.tif"),
+            overwrite=TRUE)
+```
 ## Merging other data
 
 The site boundary, obtained from https://DEIMS.org can be used to crop and mask EO data from other sources. In this section we show use of global EO data acquired from a new `R` package `geodata`. Elevation from the Shuttle Radar Terrain Mission (SRTM) and species distribution from Global Biodiversity Information Facility (GBIF) will be downloaded, cropped to a site boundary and compared. The Gran Paradiso National Park will be used, and this example will examine *Capra ibex* sitings
@@ -61,6 +97,8 @@ ibex_points <- st_as_sf(ibex, coords = c("lon", "lat"), crs = "EPSG:4326")
 
 ----
 
+#### Now extract elevation from SRTM at each Ibex siting location
+
 ```{r correlation}
 ibex_elev <- extract(x = paradiso_srtm, y=vect(ibex_points))
 ibex_points <- cbind(ibex_points, ibex_elev)
@@ -70,7 +108,7 @@ hist(ibex_points$Elev, breaks=20,
 
 ----
 
-Prepare a plot, including hillshade effect
+#### Prepare a plot, including hillshade effect
 
 ```{r ibex-plot}
 # Create hillshade raster
