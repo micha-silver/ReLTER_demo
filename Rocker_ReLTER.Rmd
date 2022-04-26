@@ -1,0 +1,60 @@
+---
+title: "Run ReLTER in a Docker container"
+author: "Paolo Tagliolato"
+date: "20/04/2022"
+output:
+  html_document:
+    toc: true
+    theme: united
+---
+
+[Back to TOC](index.html)
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# rocker_ReLTER
+A Docker image for [ReLTER](https://github.com/oggioniale/ReLTER) package.
+
+## About
+Run RStudio with preinstalled ReLTER package through Docker.
+
+## Quick setup
+1. Follow the instructions to 
+[install Docker on your computer](https://docs.docker.com/get-docker/).
+1. Open a terminal ("command prompt" in Windows) and write the following command to download the
+[rocker_relter](https://hub.docker.com/r/ptagliolato/rocker_relter) image
+  `docker pull ptagliolato/rocker_relter`
+    
+1. Run the image:  
+  `docker run -e PASSWORD=yourpassword -p 8080:8787 ptagliolato/rocker_relter`
+    
+    * This will run RStudio on port 8080, you can change the port as you like.
+    * You can change "yourpassword" with the password you prefer.
+    * If you close the terminal, the image will stop. To avoid this, add "-d" before "-e" 
+    to run "detached" from the terminal.
+    * See further options in the last section.
+    
+1. Open your browser at [localhost:8080](localhost:8080) and login with
+
+      user: rstudio  
+      password: youpassword
+
+
+## Run experimental features of ReLTER package
+ReLTER package is evolving. You can run some of the features recently 
+added to the package (namely those presented in eLTER Plus deliverable D.4.1 
+to retrieve and manage biodiversity data from GBIF, OBIS and iNaturalist) by using
+the alternative image "dev__withImprovements":
+
+    docker pull ptagliolato/rocker_relter:dev__withImprovements
+    docker run -e PASSWORD=yourpassword -p 8080:8787  ptagliolato/rocker_relter:dev__withImprovements
+
+
+## Preserve your work (use a docker volume)
+When you stop a docker container, the files created within it are lost. In order to preserve your work across 
+different runs, link a local volume (in this example, the current working directory, $(pwd)) to the container:
+
+    docker run -d -v $(pwd):/home/rstudio -e PASSWORD=yourpassword -p 8080:8787 ptagliolato/rocker_relter
+
