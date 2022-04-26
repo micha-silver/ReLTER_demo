@@ -8,9 +8,9 @@ output:
     theme: united
 ---
 
-[Back to TOC](index.html)
+<!-- [Back to TOC](index.html) -->
 
-```{r setup, include=FALSE}
+```{r setup2, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 # Convenient way to load list of packages
 pkg_list <- c("sf", "terra", "ReLTER", "tmap")
@@ -27,11 +27,13 @@ maintainer("ReLTER")
 citation("ReLTER")
 ```
 
-## Basic functions
+#### Basic functions
 
 ```{r functions}
 ls("package:ReLTER")
 ```
+
+----
 
 #### Categories
 
@@ -42,25 +44,29 @@ ls("package:ReLTER")
  
 ## Examples
 
-Search for DEIMS ID for a particular site. The function `get_ilter_generalinfo` allows to search by country name and site name.
+Search for DEIMS ID for a particular site. The function `get_ilter_generalinfo` allows to search by country name and site name. Then `get_site_info()` obtains various metadata about a chosen site.
 
-For the first example, get the DEIMS ID for Hohe Tauern in Austria
+#### For the first example, the Doñana LTSER Platform in Spain
+
 ```{r example1}
-hohe = get_ilter_generalinfo(country_name = "Austria",
-                              site_name = "Hohe Tauern")
-(hohe_id = hohe$uri)
+donana = get_ilter_generalinfo(country_name = "Spain",
+                              site_name = "Doñana")
+(donana_id = donana$uri)
 ```
 
-#### Plot a basic map of that site. We use the `tmap` package for viewing maps.
+----
+
+Plot a basic map of that site. We use the `tmap` package for viewing maps.
 
 ```{r plot-site}
-hohe_polygon <- get_site_info(hohe_id, category = "Boundaries")
+donana_polygon <- get_site_info(donana_id, category = "Boundaries")
 tm_basemap() + 
-  tm_shape(hohe_polygon) +
+  tm_shape(donana_polygon) +
   tm_fill(col = "blue", alpha = 0.3)
 ```
+---- 
 
-#### Retrieve metadata about a site. 
+#### Next example: Retrieve metadata about a site. 
 
 This example retrieves metadata from Lock Kinord in Scotland.
 
@@ -74,19 +80,31 @@ loch_kinord_details <- get_site_info(loch_kinord_id,
 print(paste("Site manager:",
             loch_kinord_details$generalInfo.siteManager[[1]]['name'],
             loch_kinord_details$generalInfo.siteManager[[1]]['email']))
-print("Metadata contact:")
+```
+
+----
+
+```{r example2b}
+# Metadata contact:
 (loch_kinord_details$generalInfo.metadataProvider[[1]]['name'])
 print(paste("Average air temperature:",
             loch_kinord_details$envCharacteristics.airTemperature.avg))
 print(paste("Annual precipitation:",
             loch_kinord_details$envCharacteristics.precipitation.annual))
-print(paste("GeoBonBiome:",
-            loch_kinord_details$envCharacteristics.geoBonBiome[[1]]))
-print("Parameters:")
-(loch_kinord_details$parameter[[1]]['parameterLabel'])
 ```
 
-#### Query a network
+----
+
+```{r example2c}
+print(paste("GeoBonBiome:",
+            loch_kinord_details$envCharacteristics.geoBonBiome[[1]]))
+# Parameters:"
+head(loch_kinord_details$parameter[[1]]['parameterLabel'], 12)
+```
+
+----
+
+#### Next example: Query a network
 
 The LTER network in Slovakia
 
@@ -95,23 +113,29 @@ lter_slovakia_id = "https://deims.org/networks/3d6a8d72-9f86-4082-ad56-a361b4cdc
 
 network_research_topics <- get_network_research_topics(lter_slovakia_id)
 head(network_research_topics$researchTopicsLabel, 20)
-network_sites <- get_network_sites(lter_slovakia_id)
-network_sites$title
 ```
+
+----
+
+```{r example3b}
+lter_slovakia_sites <- get_network_sites(lter_slovakia_id)
+lter_slovakia_sites$title
+```
+
+----
 
 #### Show map of sites in the network
 
-```{r network-map}
+```{r network-map2}
 lter_slovakia <- produce_network_points_map(lter_slovakia_id, "SVK")
-# The country border is available after running produce_network_points_map()
-svk <- readRDS("gadm36_SVK_0_sp.rds")
+svk <- readRDS("gadm36_SVK_0_sp.rds")  # downloaded by produce_network_points_map()
 tm_basemap() + 
   tm_shape(lter_slovakia) + 
   tm_dots(col = "blue", size=0.04) +
   tm_shape(svk) + 
-  tm_borders(col = "purple") +
+  tm_borders(col = "purple", lwd = 0.6) +
   tm_grid(alpha = 0.4) +
   tm_scale_bar(position = c("right", "bottom"))
 ```
 
-[Back to TOC](index.html)
+<!-- [Back to TOC](index.html) -->
