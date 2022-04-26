@@ -15,6 +15,9 @@ knitr::opts_chunk$set(echo = TRUE)
 ## Initial setup
 [initial setup](Demo1_rstudio_intro.html)
 
+### Run Docker image of RStudio with preinstalled ReLTER package.
+[Run within Docker](Rocker_ReLTER.html)
+
 ## Introducing the `ReLTER` package
 [ReLTER](Demo2_relter_intro.html)
 
