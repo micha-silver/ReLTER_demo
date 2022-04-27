@@ -184,32 +184,32 @@ produce_site_parameters_waffle(kb_id)
 
 ----
 
-#### Research topics, Related resources
+<!-- #### Research topics, Related resources -->
 
-List all research topics throughout an LTER network.
+<!-- List all research topics throughout an LTER network. -->
 
-List related resources for an LTER network.
+<!-- List related resources for an LTER network. -->
 
-We demonstrate with the LTER network in Slovakia. Then filter for "Ecosystem" research.
+<!-- We demonstrate with the LTER network in Slovakia. Then filter for "Ecosystem" research. -->
 
-```{r research-topics}
-lter_slovakia_id <- "https://deims.org/networks/3d6a8d72-9f86-4082-ad56-a361b4cdc8a0"
-slv_research_topics <- get_network_research_topics(lter_slovakia_id)
-ecosystem_items <- grepl(pattern = "ecosystem",
-                         slv_research_topics$researchTopicsLabel,
-                         fixed = TRUE)
-# Here is the filtered list
-slv_research_topics[ecosystem_items,]
-```
+<!-- ```{r research-topics} -->
+<!-- lter_slovakia_id <- "https://deims.org/networks/3d6a8d72-9f86-4082-ad56-a361b4cdc8a0" -->
+<!-- slv_research_topics <- get_network_research_topics(lter_slovakia_id) -->
+<!-- ecosystem_items <- grepl(pattern = "ecosystem", -->
+<!--                          slv_research_topics$researchTopicsLabel, -->
+<!--                          fixed = TRUE) -->
+<!-- # Here is the filtered list -->
+<!-- slv_research_topics[ecosystem_items,] -->
+<!-- ``` -->
 
-----
+<!-- ---- -->
 
-#### List related resources
-```{r related-resources}
-get_network_related_resources(lter_slovakia_id)
-```
+<!-- #### List related resources -->
+<!-- ```{r related-resources} -->
+<!-- get_network_related_resources(lter_slovakia_id) -->
+<!-- ``` -->
 
-----
+<!-- ---- -->
 
 #### Show a chaining of several functions
 

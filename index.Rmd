@@ -19,10 +19,10 @@ knitr::opts_chunk$set(echo = TRUE)
 [Run within Docker](Rocker_ReLTER.html)
 
 ## Introducing the `ReLTER` package
-[ReLTER](Demo2_relter_intro.html)
+[ReLTER](Demo2_ReLTER_intro.html)
 
 ## Advanced functions in `ReLTER`
-[Advanced](Demo3_relter_advanced.html)
+[Advanced](Demo3_ReLTER_advanced.html)
 
 ## Beyond `ReLTER`
-[Beyond](Demo4_beyond_relter.html)
+[Beyond](Demo4_beyond_ReLTER.html)
