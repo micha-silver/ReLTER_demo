@@ -9,7 +9,7 @@ output:
     css: styles.css
 ---
 
-```{r setup1, include=FALSE}
+```{r setup1, include=FALSE, purl=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
@@ -39,6 +39,7 @@ https://github.com/micha-silver/ReLTER_demo
   
 #### Some online resources
  - R for Data Science: https://r4ds.had.co.nz/index.html 
+ - FasteR: https://github.com/matloff/fasteR
  - Rseek: https://rseek.org/
  
 
@@ -63,7 +64,7 @@ https://github.com/micha-silver/ReLTER_demo
  
 ----
 
-```{r packages, message=FALSE}
+```{r intro-packages, message=FALSE}
 # Install some standard spatial packages from CRAN
 if (!require("sf", quietly = TRUE))
   install.packages("sf")
@@ -79,7 +80,7 @@ BiocManager::install("EBImage")
 
 ----
 
-```{r from-github}
+```{r intro-from-github}
 # Install development package from github
 if (!require("remotes", quietly = TRUE))
   install.packages("remotes")
@@ -92,7 +93,7 @@ if (!require("ReLTER", quietly = TRUE))
 
 After installing, we need to load the packages into this `R` session.
 
-```{r loading}
+```{r intro-loading, message=FALSE, warning=FALSE}
 # Convenient way to load list of packages
 pkg_list <- c("sf", "terra", "ReLTER", "tmap")
 lapply(pkg_list, require, character.only = TRUE)
@@ -120,7 +121,7 @@ lapply(pkg_list, require, character.only = TRUE)
 
 Use the `geodata` package for sample data. Get administrative boundaries (from GADM) and monthly precipitation rasters (from WorldClim) for Slovakia.
 
-```{r spatial-packages}
+```{r intro-spatial}
 remotes::install_github("rspatial/geodata")
 library(geodata)
 slv <- gadm("Slovakia", level=2, path=tempdir())
@@ -134,7 +135,7 @@ slv_precip <- worldclim_country("Slovakia",
 
 Display the data with `tmap`
 
-```{r slovakia-map}
+```{r intro-slovakia}
 # Use OpenStreetMaps as background
 tm_basemap("OpenStreetMap.Mapnik") +
   tm_shape(slv) +
@@ -147,7 +148,7 @@ tm_basemap("OpenStreetMap.Mapnik") +
 
 Now a different month
 
-```{r slovakia-map2}
+```{r intro-slovakia2}
 tm_basemap("OpenStreetMap.Mapnik") +
   tm_shape(slv) +
   tm_borders(col = "purple", lwd = 2) +

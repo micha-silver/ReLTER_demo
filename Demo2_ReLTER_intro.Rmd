@@ -9,8 +9,13 @@ output:
     css: styles.css
 ---
 
-```{r setup2, include=FALSE}
+```{r relter-setup, include=FALSE, purl=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+```
+
+## What is ReLTER
+
+```{r relter-loading, message=FALSE, warning=FALSE}
 # Convenient way to load list of packages
 pkg_list <- c("sf", "terra", "ReLTER", "tmap")
 lapply(pkg_list,require, character.only = TRUE)
@@ -18,9 +23,11 @@ tmap_options(check.and.fix = TRUE)
 tmap_mode("view")
 ```
 
-## What is ReLTER
+----
 
-```{r about}
+#### Package Maintainer
+
+```{r relter-maintainer}
 library(ReLTER)
 maintainer("ReLTER")
 ```
@@ -29,7 +36,7 @@ maintainer("ReLTER")
 
 #### How to cite
 
-```{r citation}
+```{r relter-citation}
 citation("ReLTER")
 ```
 
@@ -37,7 +44,7 @@ citation("ReLTER")
 
 #### Basic functions
 
-```{r functions}
+```{r relter-functions}
 ls("package:ReLTER")
 ```
 
@@ -56,7 +63,7 @@ Search for DEIMS ID for a particular site. The function `get_ilter_generalinfo` 
 
 #### For the first example, the Doñana LTSER Platform in Spain
 
-```{r example1}
+```{r relter-donana}
 donana = get_ilter_generalinfo(country_name = "Spain",
                               site_name = "Doñana")
 (donana_id = donana$uri)
@@ -66,7 +73,7 @@ donana = get_ilter_generalinfo(country_name = "Spain",
 
 Plot a basic map of that site. We use the `tmap` package for viewing maps.
 
-```{r plot-site}
+```{r relter-plot-donana}
 donana_polygon <- get_site_info(donana_id, category = "Boundaries")
 tm_basemap("OpenStreetMap.Mapnik") + 
   tm_shape(donana_polygon) +
@@ -78,7 +85,7 @@ tm_basemap("OpenStreetMap.Mapnik") +
 
 This example retrieves metadata from Lock Kinord in Scotland.
 
-```{r example2}
+```{r relter-kinord-info}
 loch_kinord <- get_ilter_generalinfo(country_name = "United K",
                               site_name = "Loch Kinord")
 (loch_kinord_id = loch_kinord$uri)
@@ -92,7 +99,7 @@ print(paste("Site manager:",
 
 ----
 
-```{r example2b}
+```{r relter-kinord-metadata}
 # Metadata contact:
 (loch_kinord_details$generalInfo.metadataProvider[[1]]['name'])
 print(paste("Average air temperature:",
@@ -103,10 +110,10 @@ print(paste("Annual precipitation:",
 
 ----
 
-```{r example2c}
+```{r relter-kinord-geobonbiome}
 print(paste("GeoBonBiome:",
             loch_kinord_details$envCharacteristics.geoBonBiome[[1]]))
-# Parameters:"
+# Parameters:
 head(loch_kinord_details$parameter[[1]]['parameterLabel'], 12)
 ```
 
@@ -116,7 +123,7 @@ head(loch_kinord_details$parameter[[1]]['parameterLabel'], 12)
 
 The LTER network in Slovakia
 
-```{r example3}
+```{r elter-slovakia}
 lter_slovakia_id = "https://deims.org/networks/3d6a8d72-9f86-4082-ad56-a361b4cdc8a0"
 
 network_research_topics <- get_network_research_topics(lter_slovakia_id)
@@ -125,7 +132,7 @@ head(network_research_topics$researchTopicsLabel, 20)
 
 ----
 
-```{r example3b}
+```{r relter-slovakia-network}
 lter_slovakia_sites <- get_network_sites(lter_slovakia_id)
 lter_slovakia_sites$title
 ```
@@ -134,7 +141,7 @@ lter_slovakia_sites$title
 
 #### Show map of sites in the network
 
-```{r network-map2}
+```{r relter-slovakia-map}
 lter_slovakia <- produce_network_points_map(lter_slovakia_id, "SVK")
 svk <- readRDS("gadm36_SVK_0_sp.rds")  # downloaded by produce_network_points_map()
 tm_basemap("OpenStreetMap.Mapnik") + 

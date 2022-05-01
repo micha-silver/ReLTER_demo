@@ -1,5 +1,4 @@
-## ----setup2, include=FALSE-----------------------------------------------------------
-knitr::opts_chunk$set(echo = TRUE)
+## ----relter-loading, message=FALSE, warning=FALSE------------------------------------
 # Convenient way to load list of packages
 pkg_list <- c("sf", "terra", "ReLTER", "tmap")
 lapply(pkg_list,require, character.only = TRUE)
@@ -7,33 +6,33 @@ tmap_options(check.and.fix = TRUE)
 tmap_mode("view")
 
 
-## ----about---------------------------------------------------------------------------
+## ----relter-maintainer---------------------------------------------------------------
 library(ReLTER)
 maintainer("ReLTER")
 
 
-## ----citation------------------------------------------------------------------------
+## ----relter-citation-----------------------------------------------------------------
 citation("ReLTER")
 
 
-## ----functions-----------------------------------------------------------------------
+## ----relter-functions----------------------------------------------------------------
 ls("package:ReLTER")
 
 
-## ----example1------------------------------------------------------------------------
+## ----relter-donana-------------------------------------------------------------------
 donana = get_ilter_generalinfo(country_name = "Spain",
                               site_name = "Doñana")
 (donana_id = donana$uri)
 
 
-## ----plot-site-----------------------------------------------------------------------
+## ----relter-plot-donana--------------------------------------------------------------
 donana_polygon <- get_site_info(donana_id, category = "Boundaries")
 tm_basemap("OpenStreetMap.Mapnik") + 
   tm_shape(donana_polygon) +
   tm_fill(col = "blue", alpha = 0.3)
 
 
-## ----example2------------------------------------------------------------------------
+## ----relter-kinord-info--------------------------------------------------------------
 loch_kinord <- get_ilter_generalinfo(country_name = "United K",
                               site_name = "Loch Kinord")
 (loch_kinord_id = loch_kinord$uri)
@@ -45,7 +44,7 @@ print(paste("Site manager:",
             loch_kinord_details$generalInfo.siteManager[[1]]['email']))
 
 
-## ----example2b-----------------------------------------------------------------------
+## ----relter-kinord-metadata----------------------------------------------------------
 # Metadata contact:
 (loch_kinord_details$generalInfo.metadataProvider[[1]]['name'])
 print(paste("Average air temperature:",
@@ -54,26 +53,26 @@ print(paste("Annual precipitation:",
             loch_kinord_details$envCharacteristics.precipitation.annual))
 
 
-## ----example2c-----------------------------------------------------------------------
+## ----relter-kinord-geobonbiome-------------------------------------------------------
 print(paste("GeoBonBiome:",
             loch_kinord_details$envCharacteristics.geoBonBiome[[1]]))
-# Parameters:"
+# Parameters:
 head(loch_kinord_details$parameter[[1]]['parameterLabel'], 12)
 
 
-## ----example3------------------------------------------------------------------------
+## ----elter-slovakia------------------------------------------------------------------
 lter_slovakia_id = "https://deims.org/networks/3d6a8d72-9f86-4082-ad56-a361b4cdc8a0"
 
 network_research_topics <- get_network_research_topics(lter_slovakia_id)
 head(network_research_topics$researchTopicsLabel, 20)
 
 
-## ----example3b-----------------------------------------------------------------------
+## ----relter-slovakia-network---------------------------------------------------------
 lter_slovakia_sites <- get_network_sites(lter_slovakia_id)
 lter_slovakia_sites$title
 
 
-## ----network-map2--------------------------------------------------------------------
+## ----relter-slovakia-map-------------------------------------------------------------
 lter_slovakia <- produce_network_points_map(lter_slovakia_id, "SVK")
 svk <- readRDS("gadm36_SVK_0_sp.rds")  # downloaded by produce_network_points_map()
 tm_basemap("OpenStreetMap.Mapnik") + 

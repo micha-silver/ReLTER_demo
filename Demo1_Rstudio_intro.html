@@ -197,7 +197,7 @@ slide:not(.current) .plotly.html-widget{
           </hgroup>
   </slide>
 
-<slide class=""><hgroup><h2>This Demo</h2></hgroup><article  class="smaller " id="this-demo">
+<slide class=""><hgroup><h2>This Demo</h2></hgroup><article  id="this-demo" class="smaller ">
 
 <ul>
 <li>Rmarkdown: cloned from <a href='https://github.com/micha-silver/ReLTER_demo' title=''>https://github.com/micha-silver/ReLTER_demo</a></li>
@@ -205,7 +205,7 @@ slide:not(.current) .plotly.html-widget{
 <li>Youtube videos: (<em>to be announced</em>)</li>
 </ul>
 
-</article></slide><slide class=""><hgroup><h2>Beginning with RStudio and git</h2></hgroup><article  class="smaller " id="beginning-with-rstudio-and-git">
+</article></slide><slide class=""><hgroup><h2>Beginning with RStudio and git</h2></hgroup><article  id="beginning-with-rstudio-and-git" class="smaller ">
 
 <h4>Start a new package <strong>based on a git repo</strong>.</h4>
 
@@ -228,6 +228,7 @@ slide:not(.current) .plotly.html-widget{
 
 <ul>
 <li>R for Data Science: <a href='https://r4ds.had.co.nz/index.html' title=''>https://r4ds.had.co.nz/index.html</a></li>
+<li>FasteR: <a href='https://github.com/matloff/fasteR' title=''>https://github.com/matloff/fasteR</a></li>
 <li>Rseek: <a href='https://rseek.org/' title=''>https://rseek.org/</a></li>
 </ul>
 
@@ -248,7 +249,7 @@ slide:not(.current) .plotly.html-widget{
 <li>Perfect for reports and … demos</li>
 </ul>
 
-</article></slide><slide class=""><hgroup><h2>Where to get <code>R</code> packages</h2></hgroup><article  class="smaller " id="where-to-get-r-packages">
+</article></slide><slide class=""><hgroup><h2>Where to get <code>R</code> packages</h2></hgroup><article  id="where-to-get-r-packages" class="smaller ">
 
 <ul>
 <li>CRAN: <a href='https://cran.r-project.org/' title=''>https://cran.r-project.org/</a></li>
@@ -280,7 +281,7 @@ if (!require(&quot;remotes&quot;, quietly = TRUE))
   install.packages(&quot;remotes&quot;)
 
 if (!require(&quot;ReLTER&quot;, quietly = TRUE))
-  remotes::install_github(&quot;oggioniale/ReLTER&quot;)</pre>
+  remotes::install_github(&quot;ropensci/ReLTER&quot;)</pre>
 
 <pre >## Registered S3 method overwritten by &#39;ggforce&#39;:
 ##   method           from 
@@ -302,15 +303,13 @@ if (!require(&quot;ReLTER&quot;, quietly = TRUE))
 ## Type &#39;citation(package = &#39;ReLTER&#39;)&#39; on how to cite R packages in
 ##     publications.</pre>
 
-</article></slide><slide class=""><hgroup><h2>Loading packages</h2></hgroup><article  class="smaller " id="loading-packages">
+</article></slide><slide class=""><hgroup><h2>Loading packages</h2></hgroup><article  id="loading-packages" class="smaller ">
 
 <p>After installing, we need to load the packages into this <code>R</code> session.</p>
 
 <pre class = 'prettyprint lang-r'># Convenient way to load list of packages
 pkg_list &lt;- c(&quot;sf&quot;, &quot;terra&quot;, &quot;ReLTER&quot;, &quot;tmap&quot;)
 lapply(pkg_list, require, character.only = TRUE)</pre>
-
-<pre >## Loading required package: tmap</pre>
 
 <pre >## [[1]]
 ## [1] TRUE
@@ -324,7 +323,7 @@ lapply(pkg_list, require, character.only = TRUE)</pre>
 ## [[4]]
 ## [1] TRUE</pre>
 
-</article></slide><slide class=""><hgroup><h2>R Spatial</h2></hgroup><article  class="smaller " id="r-spatial">
+</article></slide><slide class=""><hgroup><h2>R Spatial</h2></hgroup><article  id="r-spatial" class="smaller ">
 
 <h4>Key packages</h4>
 

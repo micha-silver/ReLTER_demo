@@ -199,7 +199,24 @@ slide:not(.current) .plotly.html-widget{
 
 <slide class=""><hgroup><h2>What can be done with ReLTER outputs</h2></hgroup><article  id="what-can-be-done-with-relter-outputs" class="smaller ">
 
-<p>Each function returns an <code>R</code> object</p>
+<pre class = 'prettyprint lang-r'>pkg_list &lt;- c(&quot;sf&quot;, &quot;terra&quot;, &quot;ReLTER&quot;, &quot;tmap&quot;)
+lapply(pkg_list, require, character.only = TRUE)</pre>
+
+<pre >## [[1]]
+## [1] TRUE
+## 
+## [[2]]
+## [1] TRUE
+## 
+## [[3]]
+## [1] TRUE
+## 
+## [[4]]
+## [1] TRUE</pre>
+
+</article></slide><slide class=""><hgroup><h2></h2></hgroup><article  class="smaller">
+
+<h4>Each function returns an <code>R</code> object</h4>
 
 <ul>
 <li>Site metadata and info returned as a <code>tibble</code>
@@ -222,16 +239,16 @@ slide:not(.current) .plotly.html-widget{
 
 </article></slide><slide class=""><hgroup><h2></h2></hgroup><article  class="smaller">
 
-<h4>Example from the TERENO Harz site in Germany</h4>
+<h4>Example from the Doñana site in Spain</h4>
 
-<pre class = 'prettyprint lang-r'>harz = get_ilter_generalinfo(country_name = &quot;Spain&quot;,
+<pre class = 'prettyprint lang-r'>donana = get_ilter_generalinfo(country_name = &quot;Spain&quot;,
                               site_name = &quot;Doñana&quot;)
-harz_id = harz$uri
-harz_polygon &lt;- get_site_info(harz_id, category = &quot;Boundaries&quot;)
-harz_meta &lt;-  get_site_info(harz_id,
+donana_id = donana$uri
+donana_polygon &lt;- get_site_info(donana_id, category = &quot;Boundaries&quot;)
+donana_meta &lt;-  get_site_info(donana_id,
                           c(&quot;Affiliations&quot;, &quot;Contacts&quot;, &quot;Parameters&quot;))
 # Get the Corine landcover from ODS
-harz_clc &lt;- get_site_ODS(harz_id, &quot;clc2018&quot;)</pre>
+donana_clc &lt;- get_site_ODS(donana_id, &quot;clc2018&quot;)</pre>
 
 </article></slide><slide class=""><hgroup><h2></h2></hgroup><article  class="smaller">
 
@@ -239,18 +256,18 @@ harz_clc &lt;- get_site_ODS(harz_id, &quot;clc2018&quot;)</pre>
 
 <pre class = 'prettyprint lang-r'># For this demo, save to temporary directory
 output_dir = tempdir()
-saveRDS(harz_meta, file.path(output_dir, &quot;Harz_metadat.Rds&quot;))
+saveRDS(donana_meta, file.path(output_dir, &quot;Donana_metadat.Rds&quot;))
 # Remove extra columns from polygon
-harz_polygon &lt;- harz_polygon[,c(&quot;title&quot;, &quot;boundaries&quot;, &quot;geoCoord&quot;, &quot;geoElev.avg&quot;)]
-st_write(harz_polygon,
-         file.path(output_dir, &quot;Harz_polygon.gpkg&quot;), append=FALSE)</pre>
+donana_polygon &lt;- donana_polygon[,c(&quot;title&quot;, &quot;boundaries&quot;, &quot;geoCoord&quot;, &quot;geoElev.avg&quot;)]
+st_write(donana_polygon,
+         file.path(output_dir, &quot;donana_polygon.gpkg&quot;), append=FALSE)</pre>
 
-<pre >## Writing layer `Harz_polygon&#39; to data source 
-##   `/tmp/Rtmp9D7N74/Harz_polygon.gpkg&#39; using driver `GPKG&#39;
+<pre >## Writing layer `donana_polygon&#39; to data source 
+##   `/tmp/Rtmppr3mhu/donana_polygon.gpkg&#39; using driver `GPKG&#39;
 ## Writing 1 features with 3 fields and geometry type Polygon.</pre>
 
-<pre class = 'prettyprint lang-r'>writeRaster(harz_clc,
-            file.path(output_dir, &quot;Harz_Corine2018.tif&quot;),
+<pre class = 'prettyprint lang-r'>writeRaster(donana_clc,
+            file.path(output_dir, &quot;Donana_Corine2018.tif&quot;),
             overwrite=TRUE)</pre>
 
 </article></slide><slide class=""><hgroup><h2>Rocker ReLTER</h2></hgroup><article  id="rocker-relter" class="smaller ">

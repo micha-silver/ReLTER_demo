@@ -1,30 +1,29 @@
-## ----setup4, include=FALSE-----------------------------------------------------------
-knitr::opts_chunk$set(echo = TRUE)
+## ----beyond-load-packages, message=FALSE, warning=FALSE------------------------------
 pkg_list <- c("sf", "terra", "ReLTER", "tmap")
-lapply(pkg_list,require, character.only = TRUE)
+lapply(pkg_list, require, character.only = TRUE)
 
 
-## ----saving--------------------------------------------------------------------------
-harz = get_ilter_generalinfo(country_name = "Spain",
+## ----beyond-donana-------------------------------------------------------------------
+donana = get_ilter_generalinfo(country_name = "Spain",
                               site_name = "Doñana")
-harz_id = harz$uri
-harz_polygon <- get_site_info(harz_id, category = "Boundaries")
-harz_meta <-  get_site_info(harz_id,
+donana_id = donana$uri
+donana_polygon <- get_site_info(donana_id, category = "Boundaries")
+donana_meta <-  get_site_info(donana_id,
                           c("Affiliations", "Contacts", "Parameters"))
 # Get the Corine landcover from ODS
-harz_clc <- get_site_ODS(harz_id, "clc2018")
+donana_clc <- get_site_ODS(donana_id, "clc2018")
 
 
-## ----saving2-------------------------------------------------------------------------
+## ----beyond-donana-saving------------------------------------------------------------
 # For this demo, save to temporary directory
 output_dir = tempdir()
-saveRDS(harz_meta, file.path(output_dir, "Harz_metadat.Rds"))
+saveRDS(donana_meta, file.path(output_dir, "Donana_metadat.Rds"))
 # Remove extra columns from polygon
-harz_polygon <- harz_polygon[,c("title", "boundaries", "geoCoord", "geoElev.avg")]
-st_write(harz_polygon,
-         file.path(output_dir, "Harz_polygon.gpkg"), append=FALSE)
-writeRaster(harz_clc,
-            file.path(output_dir, "Harz_Corine2018.tif"),
+donana_polygon <- donana_polygon[,c("title", "boundaries", "geoCoord", "geoElev.avg")]
+st_write(donana_polygon,
+         file.path(output_dir, "donana_polygon.gpkg"), append=FALSE)
+writeRaster(donana_clc,
+            file.path(output_dir, "Donana_Corine2018.tif"),
             overwrite=TRUE)
 
 
