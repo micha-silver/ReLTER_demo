@@ -1,19 +1,18 @@
 ---
 title: "ReLTER - Advanced use"
-author: "Micha Silver"
+author: "Alessandro Oggioni, Micha Silver, Paulo Tagliolato"
 date: "13/04/2022"
 output:
-    html_document:
-    toc: true
-    theme: united
+  ioslides_presentation:
+    smaller: true
+    logo: eLTER_logo_small.png
+    css: styles.css
 ---
-
-<!-- [Back to TOC](index.html) -->
 
 ```{r setup3, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 pkg_list <- c("sf", "terra", "ReLTER", "tmap")
-lapply(pkg_list,require, character.only = TRUE)
+lapply(pkg_list, require, character.only = TRUE)
 tmap_options(check.and.fix = TRUE)
 tmap_mode("view")
 ```
@@ -112,7 +111,7 @@ kb_ndvi_summer = get_site_ODS(kb_id, "ndvi_summer")
 
 ```{r kis-balaton2}
 # Plot maps
-tm_basemap() + 
+tm_basemap("OpenStreetMap.Mapnik") + 
   tm_shape(kb_polygon) +
   tm_borders(col = "purple") + 
   tm_shape(kb_ndvi_summer) +
@@ -121,7 +120,7 @@ tm_basemap() +
 ----
  
 ```{r kis-balaton3}
-tm_basemap() + 
+tm_basemap("OpenStreetMap.Mapnik") + 
   tm_shape(kb_polygon) +
   tm_borders(col = "purple") + 
   tm_shape(kb_landcover) +
@@ -146,7 +145,7 @@ lezirias_ndvi_spring = get_site_ODS(lezirias_id, "ndvi_spring")
 
 ```{r companhia2}
 # Plot maps
-tm_basemap() + 
+tm_basemap("OpenStreetMap.Mapnik") + 
   tm_shape(lezirias_polygon) +
   tm_borders(col = "purple") + 
   tm_shape(lezirias_ndvi_spring) +
@@ -232,5 +231,3 @@ tm_basemap("OpenStreetMap.Mapnik") +
   tm_grid(alpha = 0.4) +
   tm_scale_bar(position = c("right", "bottom"))
 ```
-
-<!-- [Back to TOC](index.html) -->

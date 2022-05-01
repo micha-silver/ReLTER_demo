@@ -1,7 +1,7 @@
 ---
 title: "Demonstration of `ReLTER` "
 author: "Alessandro Oggioni, Micha Silver, Paulo Tagliolato"
-date: "20/04/2022"
+date: 03/05/2022"
 output:
   ioslides_presentation:
     smaller: true
@@ -9,7 +9,7 @@ output:
     css: styles.css
 ---
 
-```{r child="Demo1_rstudio_intro.Rmd"}
+```{r child="Demo1_Rstudio_intro.Rmd"}
 ```
 
 ```{r child="Demo2_ReLTER_intro.Rmd"}
@@ -18,8 +18,5 @@ output:
 ```{r child="Demo3_ReLTER_advanced.Rmd"}
 ```
 
-```{r child="Rocker_ReLTER.Rmd"}
-```
-
-```{r child="Demo4_beyond_ReLTER.Rmd"}
+```{r child="Demo4_Beyond_ReLTER.Rmd"}
 ```

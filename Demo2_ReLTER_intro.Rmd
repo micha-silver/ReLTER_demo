@@ -1,14 +1,13 @@
 ---
 title: "Introducing ReLTER"
-author: "Micha Silver"
+author: "Alessandro Oggioni, Micha Silver, Paulo Tagliolato"
 date: "13/04/2022"
 output:
-  html_document:
-    toc: true
-    theme: united
+  ioslides_presentation:
+    smaller: true
+    logo: eLTER_logo_small.png
+    css: styles.css
 ---
-
-<!-- [Back to TOC](index.html) -->
 
 ```{r setup2, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
@@ -24,8 +23,17 @@ tmap_mode("view")
 ```{r about}
 library(ReLTER)
 maintainer("ReLTER")
+```
+
+----
+
+#### How to cite
+
+```{r citation}
 citation("ReLTER")
 ```
+
+----
 
 #### Basic functions
 
@@ -35,7 +43,7 @@ ls("package:ReLTER")
 
 ----
 
-#### Categories
+#### Categories of functions
 
   - site specific functions
   - network functions
@@ -60,7 +68,7 @@ Plot a basic map of that site. We use the `tmap` package for viewing maps.
 
 ```{r plot-site}
 donana_polygon <- get_site_info(donana_id, category = "Boundaries")
-tm_basemap() + 
+tm_basemap("OpenStreetMap.Mapnik") + 
   tm_shape(donana_polygon) +
   tm_fill(col = "blue", alpha = 0.3)
 ```
@@ -129,7 +137,7 @@ lter_slovakia_sites$title
 ```{r network-map2}
 lter_slovakia <- produce_network_points_map(lter_slovakia_id, "SVK")
 svk <- readRDS("gadm36_SVK_0_sp.rds")  # downloaded by produce_network_points_map()
-tm_basemap() + 
+tm_basemap("OpenStreetMap.Mapnik") + 
   tm_shape(lter_slovakia) + 
   tm_dots(col = "blue", size=0.04) +
   tm_shape(svk) + 
@@ -138,4 +146,3 @@ tm_basemap() +
   tm_scale_bar(position = c("right", "bottom"))
 ```
 
-<!-- [Back to TOC](index.html) -->
