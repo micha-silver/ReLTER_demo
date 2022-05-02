@@ -1,11 +1,11 @@
 ---
 title: "`R` and RStudio Intro"
-author: "Alessandro Oggioni, Micha Silver, Paulo Tagliolato"
-date: "13/04/2022"
+author: "Alessandro Oggioni and Micha Silver"
+date: "02/05/2022"
 output:
   ioslides_presentation:
     smaller: true
-    logo: eLTER_logo_small.png
+    logo: figures/eLTER_logo_small.png
     css: styles.css
 ---
 
@@ -18,58 +18,49 @@ knitr::opts_chunk$set(echo = TRUE)
   - Rmarkdown: cloned from https://github.com/micha-silver/ReLTER_demo
   - Slides on website: https://micha-silver.github.io/index.html
   - Youtube videos: (*to be announced*)
+  
+  ![](./figures/ReLTER_demo.png){.cover height="375"}
 
 ## Beginning with RStudio and git
 
-#### Start a new package **based on a git repo**.
+  RStudio (https://www.rstudio.com/products/rstudio/download/)
 
-![New Project -> Version Control](./new_project.png)
+#### Start a new RStudio project **based on a git repo**.
 
-Encourages collaboration "out of the box".
+New Project -> Version Control
 
-https://github.com/micha-silver/ReLTER_demo
+![](./figures/new_project.png){.cover width="350"}
 
+Encourages collaboration "out of the box". https://github.com/micha-silver/ReLTER_demo
 
 ----
 
-#### Basics of git:
-
-  - https://git-scm.com/book/en/v2/Git-Basics-Getting-a-Git-Repository
-  - https://r-bio.github.io/intro-git-rstudio/
-  
-#### Some online resources
- - R for Data Science: https://r4ds.had.co.nz/index.html 
+## Some `R` online resources
+ 
+ - `R` for Data Science: https://r4ds.had.co.nz
  - FasteR: https://github.com/matloff/fasteR
  - Rseek: https://rseek.org/
  
+ ![](./figures/cover.png){.cover width="250"}  ![](./figures/fasteR.png){.cover width="250" height="375"}  ![](./figures/RSeek.png){.cover width="250" height="375"}
+
 ----
-
-#### RStudio hints
-
-  - Always work in an R project
-  - Use a git repo for collaboration
-  - Do **not** `setwd()`
-  - Do **not save workspace** to `.Rdata`
-  - Use Control+Shift+F10 often
- 
-#### Markdown versus `R` script
- - Code is the same
- - RMarkdown adds formatted text and outputs
- - RMarkdown can produce output in html, pdf, and slides
- - Perfect for reports and ... demos
-
 
 ## Where to get `R` packages
  
  - CRAN: https://cran.r-project.org/
  - BioConductor: https://www.bioconductor.org/install/
- - Packages developed on github, i.e. `ReLTER`
+ - GitHub packages repository (i.e. [`ReLTER`](https://docs.ropensci.org/ReLTER/index.html), [`lterdatasampler`](https://lter.github.io/lterdatasampler/), [`EML`](https://docs.ropensci.org/EML/) )
+ - ROpenSci: https://ropensci.org
+ 
+ ![](./figures/BioConductor.png){.cover height="375"}        ![](./figures/ROpenSci.png){.cover height="375"}
  
 ----
 
-#### Installing packages
+## Some demo requirements (1/2)
 
-```{r intro-packages, message=FALSE, warning=FALSE}
+*Please execute the code before continue the presentation*
+
+```{r intro-packages, message=FALSE}
 # Install some standard spatial packages from CRAN
 if (!require("sf", quietly = TRUE))
   install.packages("sf")
@@ -85,16 +76,32 @@ BiocManager::install("EBImage")
 
 ----
 
-#### Installing from github
+## Some demo requirements (2/2)
 
-```{r intro-from-github, message=FALSE, warning=FALSE}
+```{r install-remotes, message=FALSE}
 # Install development package from github
 if (!require("remotes", quietly = TRUE))
   install.packages("remotes")
+```
 
+```{r install-ReLTER, message=FALSE}
+# Install the dev version of ReLTER for use new function
 if (!require("ReLTER", quietly = TRUE))
-  remotes::install_github("ropensci/ReLTER")
-``` 
+  remotes::install_github("ropensci/ReLTER", ref = 'dev__withImprovements')
+
+## ReLTER is specially drafted for the LTER community.
+## 
+## To contribute to the improvement of this package, join the group of
+##     developers (https://github.com/ropensci/ReLTER).
+## 
+## If you use this package, please cite as:
+## 
+## Alessandro Oggioni, Micha Silver, Luigi Ranghetti & Paolo Tagliolato.
+##     (2021) oggioniale/ReLTER: ReLTER v1.1.0 (1.1.0). Zenodo.
+##     https://doi.org/10.5281/zenodo.5576813
+```
+
+----
 
 ## Loading packages
 
@@ -106,7 +113,9 @@ pkg_list <- c("sf", "terra", "ReLTER", "tmap")
 lapply(pkg_list, require, character.only = TRUE)
 ```
 
-## R Spatial
+----
+
+## `R` Spatial
 
 #### Key packages
 
@@ -123,42 +132,3 @@ lapply(pkg_list, require, character.only = TRUE)
   - Packages are maintained here: https://github.com/rspatial
 
 ----
-
-#### An initial example
-
-Use the `geodata` package for sample data. Get administrative boundaries (from GADM) and monthly precipitation rasters (from WorldClim) for Slovakia.
-
-```{r intro-spatial}
-remotes::install_github("rspatial/geodata")
-library(geodata)
-slv <- gadm("Slovakia", level=2, path=tempdir())
-# Convert to `sf` for plotting
-slv <- st_as_sf(slv)
-slv_precip <- worldclim_country("Slovakia",
-                                var = "prec", path = tempdir())
-```
-
-----
-
-Display the data with `tmap`
-
-```{r intro-slovakia}
-# Use OpenStreetMaps as background
-tm_basemap("OpenStreetMap.Mapnik") +
-  tm_shape(slv) +
-  tm_borders(col = "purple", lwd = 2) +
-  tm_shape(slv_precip$SVK_wc2.1_30s_prec_1) +
-  tm_raster(palette = "YlGnBu", alpha=0.7)
-```
-
-----
-
-Now a different month
-
-```{r intro-slovakia2}
-tm_basemap("OpenStreetMap.Mapnik") +
-  tm_shape(slv) +
-  tm_borders(col = "purple", lwd = 2) +
-  tm_shape(slv_precip$SVK_wc2.1_30s_prec_8) +
-  tm_raster(palette = "YlGnBu", alpha=0.7)
-```
