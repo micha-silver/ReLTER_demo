@@ -232,10 +232,13 @@ slide:not(.current) .plotly.html-widget{
 <li>Rseek: <a href='https://rseek.org/' title=''>https://rseek.org/</a></li>
 </ul>
 
+</article></slide><slide class=""><hgroup><h2></h2></hgroup><article  class="smaller">
+
 <h4>RStudio hints</h4>
 
 <ul>
 <li>Always work in an R project</li>
+<li>Use a git repo for collaboration</li>
 <li>Do <strong>not</strong> <code>setwd()</code></li>
 <li>Do <strong>not save workspace</strong> to <code>.Rdata</code></li>
 <li>Use Control+Shift+F10 often</li>
@@ -246,6 +249,7 @@ slide:not(.current) .plotly.html-widget{
 <ul>
 <li>Code is the same</li>
 <li>RMarkdown adds formatted text and outputs</li>
+<li>RMarkdown can produce output in html, pdf, and slides</li>
 <li>Perfect for reports and … demos</li>
 </ul>
 
@@ -259,6 +263,8 @@ slide:not(.current) .plotly.html-widget{
 
 </article></slide><slide class=""><hgroup><h2></h2></hgroup><article  class="smaller">
 
+<h4>Installing packages</h4>
+
 <pre class = 'prettyprint lang-r'># Install some standard spatial packages from CRAN
 if (!require(&quot;sf&quot;, quietly = TRUE))
   install.packages(&quot;sf&quot;)
@@ -271,10 +277,9 @@ if (!require(&quot;BiocManager&quot;, quietly = TRUE))
 BiocManager::install()
 BiocManager::install(&quot;EBImage&quot;)</pre>
 
-<pre >## Warning: package(s) not installed when version(s) same as current; use `force = TRUE` to
-##   re-install: &#39;EBImage&#39;</pre>
-
 </article></slide><slide class=""><hgroup><h2></h2></hgroup><article  class="smaller">
+
+<h4>Installing from github</h4>
 
 <pre class = 'prettyprint lang-r'># Install development package from github
 if (!require(&quot;remotes&quot;, quietly = TRUE))
@@ -282,26 +287,6 @@ if (!require(&quot;remotes&quot;, quietly = TRUE))
 
 if (!require(&quot;ReLTER&quot;, quietly = TRUE))
   remotes::install_github(&quot;ropensci/ReLTER&quot;)</pre>
-
-<pre >## Registered S3 method overwritten by &#39;ggforce&#39;:
-##   method           from 
-##   scale_type.units units</pre>
-
-<pre >## 
-## 
-## ReLTER is specially drafted for the LTER community.
-## 
-## To contribute to the improvement of this package, join the group of
-##     developers (https://github.com/oggioniale/ReLTER).
-## 
-## If you use this package, please cite as:
-## 
-## Alessandro Oggioni, Micha Silver, Luigi Ranghetti &amp; Paolo Tagliolato.
-##     (2021) oggioniale/ReLTER: ReLTER v1.0.0 (1.0.0). Zenodo.
-##     https://doi.org/10.5281/zenodo.5576813
-## 
-## Type &#39;citation(package = &#39;ReLTER&#39;)&#39; on how to cite R packages in
-##     publications.</pre>
 
 </article></slide><slide class=""><hgroup><h2>Loading packages</h2></hgroup><article  id="loading-packages" class="smaller ">
 

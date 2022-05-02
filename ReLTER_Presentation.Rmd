@@ -9,8 +9,6 @@ output:
     css: styles.css
 ---
 
-```{r child="Demo1_Rstudio_intro.Rmd"}
-```
 
 ```{r child="Demo2_ReLTER_intro.Rmd"}
 ```

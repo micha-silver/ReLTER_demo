@@ -1,4 +1,4 @@
-## ----intro-packages, message=FALSE---------------------------------------------------
+## ----intro-packages, message=FALSE, warning=FALSE------------------------------------
 # Install some standard spatial packages from CRAN
 if (!require("sf", quietly = TRUE))
   install.packages("sf")
@@ -12,7 +12,7 @@ BiocManager::install()
 BiocManager::install("EBImage")
 
 
-## ----intro-from-github---------------------------------------------------------------
+## ----intro-from-github, message=FALSE, warning=FALSE---------------------------------
 # Install development package from github
 if (!require("remotes", quietly = TRUE))
   install.packages("remotes")

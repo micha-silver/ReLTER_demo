@@ -42,10 +42,12 @@ https://github.com/micha-silver/ReLTER_demo
  - FasteR: https://github.com/matloff/fasteR
  - Rseek: https://rseek.org/
  
+----
 
 #### RStudio hints
 
   - Always work in an R project
+  - Use a git repo for collaboration
   - Do **not** `setwd()`
   - Do **not save workspace** to `.Rdata`
   - Use Control+Shift+F10 often
@@ -53,6 +55,7 @@ https://github.com/micha-silver/ReLTER_demo
 #### Markdown versus `R` script
  - Code is the same
  - RMarkdown adds formatted text and outputs
+ - RMarkdown can produce output in html, pdf, and slides
  - Perfect for reports and ... demos
 
 
@@ -64,7 +67,9 @@ https://github.com/micha-silver/ReLTER_demo
  
 ----
 
-```{r intro-packages, message=FALSE}
+#### Installing packages
+
+```{r intro-packages, message=FALSE, warning=FALSE}
 # Install some standard spatial packages from CRAN
 if (!require("sf", quietly = TRUE))
   install.packages("sf")
@@ -80,7 +85,9 @@ BiocManager::install("EBImage")
 
 ----
 
-```{r intro-from-github}
+#### Installing from github
+
+```{r intro-from-github, message=FALSE, warning=FALSE}
 # Install development package from github
 if (!require("remotes", quietly = TRUE))
   install.packages("remotes")
