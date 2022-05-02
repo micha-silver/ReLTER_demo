@@ -1,4 +1,4 @@
-## ----intro-packages, message=FALSE, warning=FALSE------------------------------------
+## ----intro-packages, message=FALSE, warning=FALSE-------------------------------
 # Install some standard spatial packages from CRAN
 if (!require("sf", quietly = TRUE))
   install.packages("sf")
@@ -12,7 +12,7 @@ BiocManager::install()
 BiocManager::install("EBImage")
 
 
-## ----intro-from-github, message=FALSE, warning=FALSE---------------------------------
+## ----intro-from-github, message=FALSE, warning=FALSE----------------------------
 # Install development package from github
 if (!require("remotes", quietly = TRUE))
   install.packages("remotes")
@@ -21,35 +21,33 @@ if (!require("ReLTER", quietly = TRUE))
   remotes::install_github("ropensci/ReLTER")
 
 
-## ----intro-loading, message=FALSE, warning=FALSE-------------------------------------
+## ----intro-loading, message=FALSE, warning=FALSE--------------------------------
 # Convenient way to load list of packages
 pkg_list <- c("sf", "terra", "ReLTER", "tmap")
 lapply(pkg_list, require, character.only = TRUE)
 
 
-## ----intro-spatial-------------------------------------------------------------------
+## ----intro-spatial, message=FALSE, warning=FALSE--------------------------------
 remotes::install_github("rspatial/geodata")
 library(geodata)
 slv <- gadm("Slovakia", level=2, path=tempdir())
-# Convert to `sf` for plotting
+# Convert to `sf` class for plotting
 slv <- st_as_sf(slv)
 slv_precip <- worldclim_country("Slovakia",
                                 var = "prec", path = tempdir())
 
 
-## ----intro-slovakia------------------------------------------------------------------
-# Use OpenStreetMaps as background
+## ----intro-slovakia, message=FALSE, warning=FALSE-------------------------------
+tmap_mode("view")
 tm_basemap("OpenStreetMap.Mapnik") +
-  tm_shape(slv) +
-  tm_borders(col = "purple", lwd = 2) +
-  tm_shape(slv_precip$SVK_wc2.1_30s_prec_1) +
+  tm_shape(slv) + tm_borders(col = "purple", lwd = 2) +
+  tm_shape(slv_precip$SVK_wc2.1_30s_prec_1) + 
   tm_raster(palette = "YlGnBu", alpha=0.7)
 
 
-## ----intro-slovakia2-----------------------------------------------------------------
+## ----intro-slovakia2------------------------------------------------------------
 tm_basemap("OpenStreetMap.Mapnik") +
-  tm_shape(slv) +
-  tm_borders(col = "purple", lwd = 2) +
+  tm_shape(slv) + tm_borders(col = "purple", lwd = 2) +
   tm_shape(slv_precip$SVK_wc2.1_30s_prec_8) +
   tm_raster(palette = "YlGnBu", alpha=0.7)
 

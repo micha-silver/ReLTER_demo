@@ -61,8 +61,8 @@ https://github.com/micha-silver/ReLTER_demo
 
 ## Where to get `R` packages
  
- - CRAN: https://cran.r-project.org/
- - BioConductor: https://www.bioconductor.org/install/
+ - General (statistics, spatial, ML etc.): CRAN: https://cran.r-project.org/
+ - BioConductor (biology, environment): https://www.bioconductor.org/install/
  - Packages developed on github, i.e. `ReLTER`
  
 ----
@@ -128,11 +128,11 @@ lapply(pkg_list, require, character.only = TRUE)
 
 Use the `geodata` package for sample data. Get administrative boundaries (from GADM) and monthly precipitation rasters (from WorldClim) for Slovakia.
 
-```{r intro-spatial}
+```{r intro-spatial, message=FALSE, warning=FALSE}
 remotes::install_github("rspatial/geodata")
 library(geodata)
 slv <- gadm("Slovakia", level=2, path=tempdir())
-# Convert to `sf` for plotting
+# Convert to `sf` class for plotting
 slv <- st_as_sf(slv)
 slv_precip <- worldclim_country("Slovakia",
                                 var = "prec", path = tempdir())
@@ -140,14 +140,13 @@ slv_precip <- worldclim_country("Slovakia",
 
 ----
 
-Display the data with `tmap`
+Display the data with `tmap`, and use OpenStreetMaps as background.
 
-```{r intro-slovakia}
-# Use OpenStreetMaps as background
+```{r intro-slovakia, message=FALSE, warning=FALSE}
+tmap_mode("view")
 tm_basemap("OpenStreetMap.Mapnik") +
-  tm_shape(slv) +
-  tm_borders(col = "purple", lwd = 2) +
-  tm_shape(slv_precip$SVK_wc2.1_30s_prec_1) +
+  tm_shape(slv) + tm_borders(col = "purple", lwd = 2) +
+  tm_shape(slv_precip$SVK_wc2.1_30s_prec_1) + 
   tm_raster(palette = "YlGnBu", alpha=0.7)
 ```
 
@@ -157,8 +156,7 @@ Now a different month
 
 ```{r intro-slovakia2}
 tm_basemap("OpenStreetMap.Mapnik") +
-  tm_shape(slv) +
-  tm_borders(col = "purple", lwd = 2) +
+  tm_shape(slv) + tm_borders(col = "purple", lwd = 2) +
   tm_shape(slv_precip$SVK_wc2.1_30s_prec_8) +
   tm_raster(palette = "YlGnBu", alpha=0.7)
 ```
