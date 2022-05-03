@@ -99,7 +99,9 @@ The manual of `ReLTER` package could be found
 [here](https://ropensci.r-universe.dev/manual/ReLTER.pdf).
 
 
-## Examples: Search for DEIMS ID for a particular site (1/5)
+## Examples:
+
+#### Search for DEIMS ID for a site (1/5)
 
 The function `get_ilter_generalinfo()` allows to search by country name and site name.
 
@@ -124,7 +126,9 @@ tm_basemap("OpenStreetMap.Mapnik") +
   tm_fill(col = "blue", alpha = 0.3)
 ```
 
-## Example: Retrieve metadata about a site (2/5)
+----
+
+#### Retrieve metadata about a particular site (2/5)
 
 This example retrieves metadata from Lock Kinord in Scotland.
 
@@ -160,7 +164,9 @@ print(paste("GeoBonBiome:",
 head(loch_kinord_details$parameter[[1]]['parameterLabel'], 12)
 ```
 
-## Example: Query a network (3/5)
+----
+
+#### Query a network (3/5)
 
 The LTER network in Slovakia
 
@@ -203,11 +209,13 @@ tm_basemap("OpenStreetMap.Mapnik") +
   tm_scale_bar(position = c("right", "bottom"))
 ```
 
-## Example: Related resources (4/5)
+----
+
+#### Related resources (4/5)
 
 The `get_site_info` function provides a list of related resources (e.g. datasets) shared by a site (e.g. Lake Maggiore)
 
-```{r retated_resources}
+```{r rlter-related_resources}
 tSiteRelatedResources <- ReLTER::get_site_info(
   deimsid = "https://deims.org/f30007c4-8a6e-4f11-ab87-569db54638fe",
   category = "RelateRes"
@@ -215,12 +223,13 @@ tSiteRelatedResources <- ReLTER::get_site_info(
 print(tSiteRelatedResources$relatedResources[[1]][c(2:5),])
 ```
 
+----
 
-## Example: map object of a site (5/5)
+#### Map object of a site (5/5)
 
 The `produce_site_map` function produces a map of the site boundaries, within a given country and network.
 
-```{r site_map, warning=FALSE, message=FALSE, results='hide'}
+```{r relter-site_map, warning=FALSE, message=FALSE, results='hide'}
 tmap::tmap_mode("plot")
 # Example of Lake Maggiore site
 sitesNetwork <- ReLTER::get_network_sites(
@@ -239,8 +248,10 @@ siteMap <- ReLTER::produce_site_map(
 )
 ```
 
-![](./figures/produce_site_map_fig.png){.cover height="500"}
 ----
+
+![](./figures/produce_site_map_fig.png){.cover height="500"}
+
 
 ## ReLTER online documentation
 

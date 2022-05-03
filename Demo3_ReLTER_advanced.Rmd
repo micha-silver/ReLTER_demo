@@ -179,7 +179,7 @@ Coauthor of these functions are Martina Zilioli and Paolo Tagliolato.
 
 #### First example, the Gulf Of Venice (GOV)
 
-```{r GOF, warning=FALSE, message=FALSE, eval=FALSE}
+```{r adv-GOF, warning=FALSE, message=FALSE, eval=FALSE}
 DEIMS.iD of eLTER site Gulf Of Venice (GOV)
 GOVid <- "https://deims.org/758087d7-231f-4f07-bd7e-6922e0c283fd"
 resGOV <- ReLTER::get_site_speciesOccurrences(
