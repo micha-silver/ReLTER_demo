@@ -25,6 +25,8 @@ knitr::opts_chunk$set(echo = TRUE)
 
 <!-- ![](./figures/icon_rOpenSci.png){.cover height="375"} -->
 
+----
+
 ```{r relter-loading, message=FALSE, warning=FALSE, results='hide'}
 # Convenient way to load list of packages
 pkg_list <- c("sf", "terra", "ReLTER", "tmap")
@@ -32,8 +34,6 @@ lapply(pkg_list,require, character.only = TRUE)
 tmap_options(check.and.fix = TRUE)
 tmap_mode("view")
 ```
-
-----
 
 ## How to pronounce `ReLTER`
 
@@ -81,15 +81,11 @@ citation("ReLTER")
 ## }
 ```
 
-----
-
 ## Basic functions of `ReLTER`
 
 ```{r relter-functions}
 ls("package:ReLTER")
 ```
-
-----
 
 ## Documentation of `ReLTER`
 
@@ -102,7 +98,6 @@ further documentation, examples, and installation of the package.
 The manual of `ReLTER` package could be found
 [here](https://ropensci.r-universe.dev/manual/ReLTER.pdf).
 
-----
 
 ## Examples: Search for DEIMS ID for a particular site (1/5)
 
@@ -128,8 +123,6 @@ tm_basemap("OpenStreetMap.Mapnik") +
   tm_shape(donana_polygon) +
   tm_fill(col = "blue", alpha = 0.3)
 ```
-
-----
 
 ## Example: Retrieve metadata about a site (2/5)
 
@@ -166,8 +159,6 @@ print(paste("GeoBonBiome:",
 # Parameters:
 head(loch_kinord_details$parameter[[1]]['parameterLabel'], 12)
 ```
-
-----
 
 ## Example: Query a network (3/5)
 
@@ -212,8 +203,6 @@ tm_basemap("OpenStreetMap.Mapnik") +
   tm_scale_bar(position = c("right", "bottom"))
 ```
 
-----
-
 ## Example: Related resources (4/5)
 
 The `get_site_info` function provides a list of related resources (e.g. datasets) shared by a site (e.g. Lake Maggiore)
@@ -226,7 +215,6 @@ tSiteRelatedResources <- ReLTER::get_site_info(
 print(tSiteRelatedResources$relatedResources[[1]][c(2:5),])
 ```
 
-----
 
 ## Example: map object of a site (5/5)
 
@@ -254,7 +242,7 @@ siteMap <- ReLTER::produce_site_map(
 ![](./figures/produce_site_map_fig.png){.cover height="500"}
 ----
 
-## Other examples
+## ReLTER online documentation
 
 Some other examples can be found in the articles of `ReLTER` documentation.
 
