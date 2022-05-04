@@ -40,25 +40,19 @@ Encourages collaboration "out of the box". https://github.com/micha-silver/ReLTE
  - `R` for Data Science: https://r4ds.had.co.nz
  - FasteR: https://github.com/matloff/fasteR
  - Rseek: https://rseek.org/
- 
- ![](./figures/cover.png){.cover width="250"}  ![](./figures/fasteR.png){.cover width="250" height="375"}  ![](./figures/RSeek.png){.cover width="250" height="375"}
 
-----
 
 ## Where to get `R` packages
  
  - CRAN: https://cran.r-project.org/
  - BioConductor: https://www.bioconductor.org/install/
- - GitHub packages repository (i.e. [`ReLTER`](https://docs.ropensci.org/ReLTER/index.html), [`lterdatasampler`](https://lter.github.io/lterdatasampler/), [`EML`](https://docs.ropensci.org/EML/) )
- - ROpenSci: https://ropensci.org
+ - GitHub packages repository (i.e. [`ReLTER`](https://docs.ropensci.org/ReLTER/index.html)
  
- ![](./figures/BioConductor.png){.cover height="375"}        ![](./figures/ROpenSci.png){.cover height="375"}
+![](./figures/ROpenSci.png){.cover height="375"}
  
 ----
 
-## Some demo requirements (1/2)
-
-*Please execute the code before continue the presentation*
+#### Installing packages from standard repositories
 
 ```{r intro-packages, message=FALSE}
 # Install some standard spatial packages from CRAN
@@ -74,9 +68,8 @@ BiocManager::install()
 BiocManager::install("EBImage")
 ```
 
-----
 
-## Some demo requirements (2/2)
+#### Installing from github
 
 ```{r install-remotes, message=FALSE}
 # Install development package from github
@@ -101,7 +94,6 @@ if (!require("ReLTER", quietly = TRUE))
 ##     https://doi.org/10.5281/zenodo.5576813
 ```
 
-----
 
 ## Loading packages
 
@@ -113,7 +105,6 @@ pkg_list <- c("sf", "terra", "ReLTER", "tmap")
 lapply(pkg_list, require, character.only = TRUE)
 ```
 
-----
 
 ## `R` Spatial
 
