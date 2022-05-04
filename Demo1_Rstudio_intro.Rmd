@@ -65,6 +65,7 @@ https://github.com/micha-silver/ReLTER_demo
  - BioConductor (biology, environment): https://www.bioconductor.org/install/
  - Packages developed on github, i.e. `ReLTER`
  
+![](./figures/ROpenSci.png){.cover height="375"}
 ----
 
 #### Installing packages
