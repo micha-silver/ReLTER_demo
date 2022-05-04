@@ -66,8 +66,10 @@ https://github.com/micha-silver/ReLTER_demo
  - General (statistics, spatial, ML etc.): CRAN: https://cran.r-project.org/
  - BioConductor (biology, environment): https://www.bioconductor.org/install/
  - Packages developed on github, i.e. `ReLTER`
+ - `R`OpenSci (platform for vetted and open `R` packages)
  
-![](./figures/ROpenSci.png){.cover height="375"}
+![](./figures/ROpenSci.png){.cover height="325"}
+
 ----
 
 #### Installing packages
