@@ -19,6 +19,8 @@ knitr::opts_chunk$set(echo = TRUE)
   - Slides on website: https://micha-silver.github.io/index.html
   - Youtube videos: (*to be announced*)
 
+![](./figures/ReLTER_demo.png){.cover height="375"}
+  
 ## Beginning with RStudio and git
 
 #### Start a new package **based on a git repo**.
