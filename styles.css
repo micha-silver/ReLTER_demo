@@ -1,16 +1,29 @@
+/*
+slides>slide.title-slide {
+    background-image: url('figures/eLTER_logo.png');
+    background-size: 40% 20%;
+    background-repeat: no-repeat ;
+}
+*/
+
 .gdbar img {
-  width: 300px !important;
-  height: 120px !important;
-  margin: 8px 8px;
+  width: 400px !important;
+  height: 160px !important;
+  margin: 12px 12px;
 }
 
 .gdbar {
-  width: 320px !important;
-  height: 140px !important;
+  width: 450px !important;
+  height: 180px !important;
 }
 
+
+
 slides > slide:not(.nobackground):before {
+ /* background-image: url('figures/eLTER_strip+logo.png');
+ background-size: 400% 400%;
+ */
   width: 125px;
-  height: 50px;
-  background-size: 125px 50px;
+  height: 50x;
+  background-size: 125px 50px;*/
 }

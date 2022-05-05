@@ -5,7 +5,7 @@ date: "13/04/2022"
 output:
   ioslides_presentation:
     smaller: true
-    logo: eLTER_logo_small.png
+    logo: figures/eLTER_logo.png
     css: styles.css
 ---
 
@@ -16,12 +16,14 @@ knitr::opts_chunk$set(echo = TRUE)
 ## This Demo
 
   - Rmarkdown: cloned from https://github.com/micha-silver/ReLTER_demo
+  
+![](./figures/ReLTER_demo.png){.cover height=300 width=400}
+
   - Slides on website: https://micha-silver.github.io/index.html
   - Youtube videos: (*to be announced*)
 
-![](./figures/ReLTER_demo.png){.cover height="375"}
-  
-## Beginning with RStudio and git
+
+## Beginning with RStudio and git {data-background=figures/eLTER_strip+logo.png, data-background-position=center data-background-size=800px}
 
 #### Start a new package **based on a git repo**.
 
@@ -30,7 +32,6 @@ knitr::opts_chunk$set(echo = TRUE)
 Encourages collaboration "out of the box".
 
 https://github.com/micha-silver/ReLTER_demo
-
 
 ----
 
@@ -44,6 +45,7 @@ https://github.com/micha-silver/ReLTER_demo
  - FasteR: https://github.com/matloff/fasteR
  - Rseek: https://rseek.org/
  
+
 ----
 
 #### RStudio hints
@@ -101,6 +103,7 @@ if (!require("ReLTER", quietly = TRUE))
   remotes::install_github("ropensci/ReLTER")
 ``` 
 
+
 ## Loading packages
 
 After installing, we need to load the packages into this `R` session.
@@ -126,6 +129,7 @@ lapply(pkg_list, require, character.only = TRUE)
   - Spatial Data Science: https://www.rspatial.org/
   - A blog on R-spatial issues: https://r-spatial.org/
   - Packages are maintained here: https://github.com/rspatial
+  - R-SIG_Geo Mailist: https://stat.ethz.ch/mailman/listinfo/R-SIG-Geo/
 
 ----
 
