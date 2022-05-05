@@ -203,11 +203,12 @@ occ_SRC <- ReLTER::get_site_speciesOccurrences(
 
 ----
 
-#### Trasform this data into eLTER data template
+#### Transform this data into eLTER data template
 
-Fields mapping among the three data source schemas (i.e., GBIF, iNaturalist, OBIS) and the eLTER data-reporting template (Peterseil et al., 2021) was carried out so as to design `ReLTER` functions: `map_occ_gbif2elter` and `save_occ_eLTER_reporting_Archive`.
+Fields mapping between the three data source schemas (i.e., GBIF, iNaturalist, OBIS)
+(following Peterseil et al., 2021) allowed to design `ReLTER` functions: `map_occ_gbif2elter` and `save_occ_eLTER_reporting_Archive`.
 
-Below an example of iNaturalist export data, for the Saldur River Catchment site.
+The example below gets iNaturalist data, for the Saldur River Catchment site.
 
 
 ```{r export, warning=FALSE, message=FALSE, eval=FALSE}
@@ -223,7 +224,7 @@ outInat <- tblSaldur_inat %>%
 ReLTER::save_occ_eLTER_reporting_Archive(outInat)
 ```
 
-The eLTER useful archive created is:
+This prepares an eLTER usable archive as:
 
 * biodiv_occurrence_site_97ff6180-e5d1-45f2-a559-8a7872eb26b1_inat.zip
 

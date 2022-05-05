@@ -204,6 +204,20 @@ writeRaster(donana_clc,
 <!--   tm_symbols(size=0.2, col = "red")  -->
 <!-- ``` -->
 
+
+## Getting help with `R`
+
+  - First **search for similar questions**
+  - Package specific questions:
+    * Approach the package maintainer
+    * Report issues on package github repository
+  - The [r] tagged questions on [gis.stackexchange.com](https://gis.stackexchange.com/questions/tagged/r) 
+  - Maillists: [list of active maillists](https://www.r-project.org/mail.html)
+    * R programming
+    * R-SIG-Geo for spatial questions
+
+  
+  
 ## Future plans
 
  - Acquire MODIS products
