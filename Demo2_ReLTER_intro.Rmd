@@ -90,16 +90,45 @@ citation("ReLTER")
 ls("package:ReLTER")
 ```
 
-## Documentation of `ReLTER`
+## Getting help with `ReLTER`
 
-Visit the `ReLTER` website at
+#### Visit the `ReLTER` website:
+
 [docs.ropensci.org/ReLTER/](https://docs.ropensci.org/ReLTER/) for
 further documentation, examples, and installation of the package.
 
-![](./figures/ReLTER_site.png){.cover height="375"}
+![](./figures/ReLTER_site.png){.cover height="300"}
 
-The manual of `ReLTER` package could be found
+The manual of `ReLTER` package is found
 [here](https://ropensci.r-universe.dev/manual/ReLTER.pdf).
+
+----
+
+#### Reporting bugs and new feature requests
+
+```{r relter-maintainer}
+maintainer("ReLTER")
+```
+
+Report bugs on the ROpenSci github [issues](https://github.com/ropensci/ReLTER/issues) page
+
+
+![](./figures/ReLTER_issues.png){.cover height="300"}
+
+(You need to be logged in to Github to add a new issue)
+
+----
+
+#### However:
+
+Whenever reporting an issue or new feature request:
+ 
+  - First search for similar issues
+  - Post a **Minimum Reproducible Example** 
+  - Include the code and data that causes the error
+  - Use the [`reprex`](https://reprex.tidyverse.org/) package for this
+  - Add your working environment: i.e. `sessionInfo()`
+
 
 
 ## Examples:
@@ -257,9 +286,9 @@ siteMap <- ReLTER::produce_site_map(
 ![](./figures/produce_site_map_fig.png){.cover height="500"}
 
 
-## ReLTER online documentation
+----
 
-Some other examples can be found in the articles of `ReLTER` documentation.
+#### Additional examples are found in the `ReLTER` [documentation](https://docs.ropensci.org/ReLTER/articles/)
 
 https://docs.ropensci.org/ReLTER/articles/
 
