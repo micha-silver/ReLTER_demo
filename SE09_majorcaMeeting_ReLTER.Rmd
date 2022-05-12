@@ -1,0 +1,185 @@
+---
+title: "Introducing `ReLTER`"
+subtitle: "Mallorca eLTER-Plus and PPP conference"
+author: "Alessandro Oggioni and Micha Silver"
+date: "12/05/2022"
+output:
+  ioslides_presentation:
+    smaller: true
+    logo: figures/eLTER_logo_small.png
+    css: styles.css
+    widescreen: true
+---
+
+```{r relter-setup, include=FALSE, purl=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+# Convenient way to load list of packages
+pkg_list <- c("sf", "terra", "ReLTER", "tmap", "knitr", "glue")
+lapply(pkg_list, require, character.only = TRUE)
+tmap_options(check.and.fix = TRUE)
+tmap_mode("view")
+```
+
+## What is `ReLTER`
+
+`ReLTER` is an R package that: **provides access to [DEIMS-SDR](https://deims.org/)**, allows **interact** with software implemented by eLTER Research Infrastructure (RI) and **improves the data/information shared** by them.
+
+`ReLTER` **is born within eLTER-Plus H2020 project** and it shall definitely follow the progress of ([eLTER RI](https://elter-ri.eu/)).
+
+`ReLTER` passed the peer review of [ROpenSci](https://ropensci.org/packages/all/), the biggest R community for open tools and open science.
+
+<iframe src="https://ropensci.r-universe.dev/ui#package:ReLTER" scrolling= "yes"></iframe>
+
+## How to pronounce `ReLTER`
+
+<font size="8">riːˈɛl-tiː-iː-ɑː</font>
+
+```{r setup, include = FALSE}
+html_tag_audio <- function(file, type = c("wav")) {
+  type <- match.arg(type)
+  htmltools::tags$audio(
+    controls = "",
+    htmltools::tags$source(
+      src = file,
+      type = glue::glue("audio/{type}", type = type)
+    )
+  )
+}
+```
+
+#### Audio
+
+`r html_tag_audio("sounds/ReLTER.wav")`
+
+## Documentation of `ReLTER`
+
+Visit the `ReLTER` website at
+[docs.ropensci.org/ReLTER/](https://docs.ropensci.org/ReLTER/) for
+further documentation, examples, and installation of the package.
+
+<iframe src="https://docs.ropensci.org/ReLTER/" scrolling= "yes"></iframe>
+
+## How to collaborate with `ReLTER`
+
+There are several ways you can contribute to this project.
+
+### Ask a question ⁉️, Report a bug 🐛 or Propose an idea 💡
+
+Using `ReLTER` and got stuck? Take a look at the [documentation](https://docs.ropensci.org/ReLTER/) and [issue list](https://github.com/ropensci/ReLTER/issues)
+
+### Contribute code 📝
+
+Care to fix bugs or implement new functionality for `ReLTER`? Awesome! 👏
+
+Please ask to us!!
+
+
+## How to cite `ReLTER`
+
+```{r relter-citation, message=FALSE, results='hide'}
+citation("ReLTER")
+
+## To cite the 'ReLTER' package in publications use:
+##
+##   Alessandro Oggioni, Micha Silver, Luigi Ranghetti & Paolo Tagliolato.
+##   (2021). oggioniale/ReLTER: ReLTER v1.1.0 (1.1.0). Zenodo.
+##   https://doi.org/10.5281/zenodo.5576813
+##
+## A BibTeX entry for LaTeX users is
+##
+##   @software{alessandro_oggioni_2021_5576813,
+##   author       = {Alessandro Oggioni and Micha Silver and
+##                   Luigi Ranghetti and Paolo Tagliolato},
+##   title        = {ropensci/ReLTER: ReLTER v1.1.0},
+##   year         = 2022,
+##   publisher    = {Zenodo},
+##   version      = {1.1.0},
+##   doi          = {10.5281/zenodo.5576813},
+##   url          = {https://doi.org/10.5281/zenodo.5576813}
+## }
+```
+
+## Examples:
+
+#### Search for DEIMS ID for a site (1/3)
+
+The function `get_ilter_generalinfo()` allows to search by country name and site name.
+
+Then `get_site_info()` obtains various metadata about a chosen site.
+
+#### For this example, the Doñana LTSER Platform in Spain
+
+```{r relter-donana}
+donana <- ReLTER::get_ilter_generalinfo(country_name = "Spain",
+                              site_name = "Doñana")
+donana_id = donana$uri
+```
+
+----
+
+Plot a basic map of that site. We use the `tmap` package for viewing maps.
+
+```{r relter-plot-donana}
+donana_id <- "https://deims.org/bcbc866c-3f4f-47a8-bbbc-0a93df6de7b2"
+donana_polygon <- ReLTER::get_site_info(donana_id, category = "Boundaries")
+tm_basemap("OpenStreetMap.Mapnik") +
+  tm_shape(donana_polygon) +
+  tm_fill(col = "blue", alpha = 0.3)
+```
+
+----
+
+#### Retrieve metadata about a particular site (2/3)
+
+This example retrieves metadata from Lock Kinord in Scotland.
+
+```{r relter-kinord-info}
+loch_kinord_id <- "https://deims.org/9fa171d2-5a24-40d3-9c06-b3f9e9d0f270"
+loch_kinord_details <- ReLTER::get_site_info(loch_kinord_id,
+                                 c("Contacts", "EnvCharacts", "Parameters"))
+
+print(paste("Site manager:",
+            loch_kinord_details$generalInfo.siteManager[[1]]['name'],
+            loch_kinord_details$generalInfo.siteManager[[1]]['email']))
+```
+
+----
+
+```{r relter-kinord-metadata}
+# Metadata contact:
+(loch_kinord_details$generalInfo.metadataProvider[[1]]['name'])
+
+glue("Average air temperature: ",
+            loch_kinord_details$envCharacteristics.airTemperature.avg)
+glue("Annual precipitation: ",
+            loch_kinord_details$envCharacteristics.precipitation.annual)
+```
+
+----
+
+```{r relter-kinord-geobonbiome}
+glue("GeoBonBiome:",
+            loch_kinord_details$envCharacteristics.geoBonBiome[[1]])
+# Parameters:
+kable(head(loch_kinord_details$parameter[[1]], 12))
+```
+
+----
+
+#### Related resources (3/3)
+
+The `get_site_info` function provides a list of related resources (e.g. datasets) shared by a site (e.g. Lake Maggiore)
+
+```{r rlter-related_resources}
+tSiteRelatedResources <- ReLTER::get_site_info(
+  deimsid = "https://deims.org/f30007c4-8a6e-4f11-ab87-569db54638fe",
+  category = "RelateRes"
+)
+kable(tSiteRelatedResources$relatedResources[[1]])
+```
+
+## More info ...
+
+Join to SE18!!
+
+<iframe src="https://docs.google.com/document/d/1omDa3lDHnNP23T0amVv_oeEuBL7Hl73e/edit#heading=h.gjdgxs" scrolling= "yes"></iframe>

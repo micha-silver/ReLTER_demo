@@ -11,6 +11,9 @@ output:
 
 ```{r relter-setup, include=FALSE, purl=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+# Convenient way to load list of packages
+pkg_list <- c("sf", "terra", "ReLTER", "tmap")
+lapply(pkg_list, require, character.only = TRUE)
 ```
 
 ## What is `ReLTER`
@@ -120,6 +123,7 @@ donana_id = donana$uri
 Plot a basic map of that site. We use the `tmap` package for viewing maps.
 
 ```{r relter-plot-donana}
+donana_id <- "https://deims.org/bcbc866c-3f4f-47a8-bbbc-0a93df6de7b2"
 donana_polygon <- ReLTER::get_site_info(donana_id, category = "Boundaries")
 tm_basemap("OpenStreetMap.Mapnik") +
   tm_shape(donana_polygon) +
