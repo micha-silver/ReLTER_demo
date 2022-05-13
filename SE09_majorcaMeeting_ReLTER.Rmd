@@ -1,7 +1,7 @@
 ---
 title: "Introducing `ReLTER`"
 subtitle: "Mallorca eLTER-Plus and PPP conference"
-author: "Alessandro Oggioni and Micha Silver"
+author: "Alessandro Oggioni, Micha Silver and Paolo Tagliolato"
 date: "12/05/2022"
 output:
   ioslides_presentation:
