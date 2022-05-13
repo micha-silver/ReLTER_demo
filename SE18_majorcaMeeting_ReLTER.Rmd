@@ -1,7 +1,7 @@
 ---
 title: "`ReLTER`: a R package for LTER Community"
 subtitle: "Mallorca eLTER-Plus and PPP conference"
-author: "Alessandro Oggioni, Micha Silver and Paolo Tagliolto"
+author: "Alessandro Oggioni, Micha Silver and Paolo Tagliolato"
 date: "02/05/2022"
 output:
   ioslides_presentation:
@@ -105,6 +105,16 @@ if (!require("ReLTER", quietly = TRUE))
 ##     (2021) oggioniale/ReLTER: ReLTER v1.1.0 (1.1.0). Zenodo.
 ##     https://doi.org/10.5281/zenodo.5576813
 ```
+
+or you can [run `ReLTER` in a Docker container](SE18_majorcaMeeting_ReLTER.html#63)
+
+## Documentation of `ReLTER`
+
+Visit the `ReLTER` website at
+[docs.ropensci.org/ReLTER/](https://docs.ropensci.org/ReLTER/) for
+further documentation, examples, and installation of the package.
+
+<iframe src="https://docs.ropensci.org/ReLTER/" scrolling= "yes"></iframe>
 
 ## Loading packages
 
@@ -460,11 +470,11 @@ lezirias_ndvi_spring = ReLTER::get_site_ODS(lezirias_id, "ndvi_spring")
 
 ```{r adv-companhia-plot}
 # Plot maps
-tm_basemap("OpenStreetMap.Mapnik") + 
-  tm_shape(lezirias_polygon) +
-  tm_borders(col = "purple") + 
-  tm_shape(lezirias_ndvi_spring) +
-  tm_raster(alpha=0.7, palette = "RdYlGn")
+tmap::tm_basemap("OpenStreetMap.Mapnik") + 
+  tmap::tm_shape(lezirias_polygon) +
+  tmap::tm_borders(col = "purple") + 
+  tmap::tm_shape(lezirias_ndvi_spring) +
+  tmap::tm_raster(alpha=0.7, palette = "RdYlGn")
 ```
 
 ----
@@ -473,10 +483,12 @@ The function outputs a raster. We can save to Geotiff for use in other GIS
 
 ```{r adv-save}
 class(lezirias_ndvi_spring)
-writeRaster(x = lezirias_ndvi_spring,
+terra::writeRaster(x = lezirias_ndvi_spring,
             filename = "lezirias_ndvi_spring.tif",
             overwrite = TRUE)
 ```
+
+*The "lezirias_ndvi_spring.tif" file has been created.*
 
 ----
 
@@ -567,9 +579,9 @@ The eLTER useful archive created is:
 
 # Show a chaining of several functions
 
-## again the main version of package
+## Please return to the main version of package
 
-*before continue please execute install the last version of ReLTER Package*
+*Before continue please execute install the last version of ReLTER Package*
 
 ```{r ReLTER}
 if (!require("ReLTER", quietly = TRUE))
@@ -609,7 +621,11 @@ listItaSites <- ReLTER::get_network_sites(
    "https://deims.org/network/7fef6b73-e5cb-4cd2-b438-ed32eb1504b3"
 ) %>%
   dplyr::filter(!grepl('^IT', title))
+```
 
+----
+
+```{r tableList}
 knitr::kable(
   listItaSites[1:10, ],
   caption = "The list of site for LTER-Italy network"
@@ -658,8 +674,9 @@ knitr::kable(
 ```
 
 
-## Get all resources deliverd by EU eLTER sites
+## Get all resources delivered by EU eLTER sites
 
+*Some other required package*
 ```{r requirements1}
 if (!require("purrr", quietly = TRUE))
   install.packages("purrr")
@@ -668,6 +685,8 @@ library(purrr)
 ```
 
 ----
+
+#### Resources delivered
 
 ```{r allResources}
 eLTER_eu_networks <- readr::read_csv("./other/eLTER_eu_networks.csv", show_col_types = FALSE) %>%
@@ -716,21 +735,16 @@ knitr::kable(
 
 #### Map of dataset delivered
 
-*requirements*
+*Some other required packages*
 ```{r requirements2}
-if (!require("rnaturalearth", quietly = TRUE))
-  install.packages("rnaturalearth")
-if (!require("ggplot2", quietly = TRUE))
-  install.packages("ggplot2")
-if (!require("rworldmap", quietly = TRUE))
-  install.packages("rworldmap")
-
 library(rnaturalearth)
 library(rworldmap)
 library(ggplot2)
 ```
 
 ----
+
+#### Dataset distribution map
 
 ```{r resourcesMap}
 # Get the world map
@@ -758,3 +772,74 @@ map_datasets <- ggplot2::ggplot() +
 map_datasets
 ```
 
+# Run `ReLTER` i a docker container
+
+## Rocker ReLTER
+
+A Docker image for [ReLTER](https://github.com/ropensci/ReLTER) package.
+
+#### Capabilities
+
+Run RStudio with preinstalled ReLTER package through Docker.
+
+----
+
+#### Quick setup
+  1. Follow the instructions to
+[install Docker on your computer](https://docs.docker.com/get-docker/).
+  1. Open a terminal ("command prompt" in Windows) and write the following command to download the
+[rocker_relter](https://hub.docker.com/r/ptagliolato/rocker_relter) image
+
+```{bash docker1, eval=FALSE}
+docker pull ptagliolato/rocker_relter
+```
+  1. Run the image:
+
+```{bash docker2, eval=FALSE}
+docker run -e PASSWORD=yourpassword -p 8080:8787 \
+  ptagliolato/rocker_relter
+```
+
+    * This will run RStudio on port 8080, you can change the port as you like.
+    * You can change "yourpassword" with the password you prefer.
+    * If you close the terminal, the image will stop. To avoid this, add "-d" before "-e"
+    to run "detached" from the terminal.
+    * See further options in the last section.
+
+####  Open your browser at [localhost:8080](localhost:8080) and login with
+
+      user: rstudio
+      password: yourpassword
+
+----
+
+#### Run experimental features of ReLTER package
+
+ReLTER package is evolving. You can run some of the features recently
+added to the package (namely those presented in eLTER Plus deliverable D.4.1
+to retrieve and manage biodiversity data from GBIF, OBIS and iNaturalist) by using
+the alternative image "dev__withImprovements":
+
+```{bash docker3, eval=FALSE}
+docker pull ptagliolato/rocker_relter:dev__withImprovements
+
+docker run -e PASSWORD=yourpassword -p 8080:8787 \
+  ptagliolato/rocker_relter:dev__withImprovements
+```
+
+
+#### Preserve your work (use a docker volume)
+
+When you stop a docker container, the files created within it are lost. In order to preserve your work across
+different runs, link a local volume (in this example, the current working directory, $(pwd)) to the container:
+
+```{bash docker4, eval=FALSE}
+docker run -d -v $(pwd):/home/rstudio -e PASSWORD=yourpassword \
+  -p 8080:8787 ptagliolato/rocker_relter
+```
+
+# Final remarks
+
+## How to collaborate with `ReLTER`
+
+<iframe src="https://docs.ropensci.org/ReLTER/CONTRIBUTING.html" scrolling= "yes"></iframe>
