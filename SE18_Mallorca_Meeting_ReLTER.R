@@ -1,3 +1,7 @@
+##------------------------------------------------------------------------------
+## Installing packages
+##------------------------------------------------------------------------------
+
 ## ----intro-packages, message=FALSE--------------------------------------------
 # Install some standard spatial packages from CRAN
 if (!require("sf", quietly = TRUE))
@@ -10,8 +14,6 @@ if (!require("terra", quietly = TRUE))
 #  install.packages("glue")
 if (!require("remotes", quietly = TRUE))
   install.packages("remotes")
-if (!require("dplyr", quietly = TRUE))
-  install.packages("dplyr")
 
 ## ----install-ReLTER, message=FALSE--------------------------------------------
 # Install the dev version of ReLTER for use new function
@@ -20,9 +22,12 @@ if (!require("ReLTER", quietly = TRUE))
 
 ## ----intro-loading, message=FALSE, warning=FALSE------------------------------
 # Convenient way to load list of packages
-pkg_list <- c("sf", "terra", "ReLTER", "tmap", "dplyr")
+pkg_list <- c("sf", "terra", "ReLTER", "tmap", "leaflet")
 lapply(pkg_list, require, character.only = TRUE)
 
+##------------------------------------------------------------------------------
+## Initial example
+##------------------------------------------------------------------------------
 
 ## ----site_info----------------------------------------------------------------
 lakeMaggiore <- ReLTER::get_site_info(
@@ -33,13 +38,12 @@ lakeMaggiore
 
 
 ## ----lakeMaggioreMap----------------------------------------------------------
-leaflet::leaflet(lakeMaggiore) %>%
-  leaflet::addProviderTiles(provider = "CartoDB.PositronNoLabels",
-                            group = "Basemap",
-                            layerId = 123) %>%
-  leaflet::addTiles("http://{s}.basemaps.cartocdn.com/light_only_labels/{z}/{x}/{y}.png") %>% 
-  leaflet::addPolygons(color = "#444444", weight = 1, smoothFactor = 0.5,
-    opacity = 1.0, fillOpacity = 0.5)
+leaflet(lakeMaggiore) %>%
+  addProviderTiles(provider = "CartoDB.PositronNoLabels",
+                  group = "Basemap", layerId = 123) %>%
+  addTiles("http://{s}.basemaps.cartocdn.com/light_only_labels/{z}/{x}/{y}.png") %>% 
+  addPolygons(color = "#444444", weight = 1, smoothFactor = 0.5,
+              opacity = 1.0, fillOpacity = 0.5)
 
 
 ## ----lakeMaggioreOtherInfo----------------------------------------------------
@@ -49,6 +53,9 @@ siteInfo <- ReLTER::get_site_info(
 )
 print(siteInfo$affiliation.projects[[1]])
 
+##------------------------------------------------------------------------------
+## Second example
+##------------------------------------------------------------------------------
 
 ## ----activityMarPiccolo-------------------------------------------------------
 activityNoMap <- ReLTER::get_activity_info(
@@ -74,6 +81,9 @@ tDataset <- get_dataset_info(
 )
 tDataset
 
+##------------------------------------------------------------------------------
+## Third example
+##------------------------------------------------------------------------------
 
 ## ----adv-missing--------------------------------------------------------------
 # Multiple sites in the KISKUN region of Hungary
@@ -113,6 +123,9 @@ paradiso_details$generalInfo.metadataProvider[[1]]['name']
 # But what about funding agency
 paradiso_details$generalInfo.fundingAgency
 
+##------------------------------------------------------------------------------
+## Additional plots
+##------------------------------------------------------------------------------
 
 ## ----adv-pie-params, warning=FALSE, message=FALSE-----------------------------
 ReLTER::produce_site_parameters_pie("https://deims.org/8129fed1-37b3-48e6-b786-d416917acc72")
@@ -122,8 +135,12 @@ ReLTER::produce_site_parameters_pie("https://deims.org/8129fed1-37b3-48e6-b786-d
 ReLTER::produce_site_parameters_waffle("https://deims.org/8129fed1-37b3-48e6-b786-d416917acc72")
 
 
+##------------------------------------------------------------------------------
+## eLTER Network example
+##------------------------------------------------------------------------------
+
 ## ----relter-site_map, warning=FALSE, message=FALSE----------------------------
-tmap::tmap_mode("view")
+
 # Example of Lake Maggiore site
 sitesNetwork <- ReLTER::get_network_sites(
   networkDEIMSID = "https://deims.org/network/7fef6b73-e5cb-4cd2-b438-ed32eb1504b3"
@@ -132,6 +149,7 @@ sitesNetwork <- ReLTER::get_network_sites(
 # macrosites.
 sitesNetwork <- (sitesNetwork[!grepl('^IT', sitesNetwork$title),])
 sf::st_crs(sitesNetwork) = 4326
+tmap::tmap_mode("plot")
 siteMap <- ReLTER::produce_site_map(
   deimsid = "https://deims.org/f30007c4-8a6e-4f11-ab87-569db54638fe",
   countryCode = "ITA",
@@ -139,12 +157,13 @@ siteMap <- ReLTER::produce_site_map(
   gridNx = 0.7,
   gridNy = 0.35
 )
+siteMap
+tmap::tmap_mode("view")
 
 
-## ----devReLTER----------------------------------------------------------------
-#if (!require("ReLTER", quietly = TRUE))
-#  remotes::install_github("ropensci/ReLTER", ref = 'dev__withImprovements', force = TRUE)
-
+##------------------------------------------------------------------------------
+## Acquiring EO data
+##------------------------------------------------------------------------------
 
 ## ----adv-balaton-ods----------------------------------------------------------
 # Get DEIMS ID for Kis-Balaton site 
@@ -200,6 +219,9 @@ terra::writeRaster(x = lezirias_ndvi_spring,
             filename = "lezirias_ndvi_spring.tif",
             overwrite = TRUE)
 
+##------------------------------------------------------------------------------
+## Additional metadata
+##------------------------------------------------------------------------------
 
 ## ----research-topics----------------------------------------------------------
 lter_slovakia_id <- "https://deims.org/networks/3d6a8d72-9f86-4082-ad56-a361b4cdc8a0"
@@ -215,18 +237,24 @@ print(slv_research_topics[ecosystem_items,])
 print(get_network_related_resources(lter_slovakia_id))
 
 
+##------------------------------------------------------------------------------
+## Coming soon....
+##------------------------------------------------------------------------------
+
 ## ----adv-GOF, warning=FALSE, message=FALSE, eval=FALSE------------------------
 ## # DEIMS.iD of eLTER site Gulf Of Venice (GOV)
 ## GOVid <- "https://deims.org/758087d7-231f-4f07-bd7e-6922e0c283fd"
 ## resGOV <- ReLTER::get_site_speciesOccurrences(
-##   deimsid = GOVid, list_DS = "obis", show_map = TRUE, limit = 10)
+##        deimsid = GOVid,
+##        list_DS = "obis", show_map = TRUE, limit = 10)
 
 
 ## ----Saldur, warning=FALSE, message=FALSE, eval=FALSE-------------------------
 ## # DEIMS.iD of eLTER the Saldur River Catchment site
 ## saldur_id <- "https://deims.org/97ff6180-e5d1-45f2-a559-8a7872eb26b1"
 ## occ_SRC <- ReLTER::get_site_speciesOccurrences(
-##   deimsid = saldur_id, list_DS = c("gbif", "inat"), show_map = TRUE, limit = 100)
+##        deimsid = saldur_id,
+##        list_DS = c("gbif", "inat"), show_map = TRUE, limit = 100)
 
 
 ## ----export, warning=FALSE, message=FALSE, eval=FALSE-------------------------
@@ -241,6 +269,30 @@ print(get_network_related_resources(lter_slovakia_id))
 ##   ReLTER::map_occ_inat2elter(deimsid = saldurid)
 ## ReLTER::save_occ_eLTER_reporting_Archive(outInat)
 
+
+##------------------------------------------------------------------------------
+## Additional network metadata
+##------------------------------------------------------------------------------
+
+## ----networkGenInfo-----------------------------------------------------------
+listITAsites <- ReLTER::get_network_sites(
+  networkDEIMSID =
+    "https://deims.org/network/7fef6b73-e5cb-4cd2-b438-ed32eb1504b3"
+)
+ITAsites <- listITAsites[!grepl('^IT', listITAsites$title),]
+print(ITAsites[1:10, ])
+
+## ----networkMap---------------------------------------------------------------
+sitesLago <- ITAsites[grepl("Lago", ITAsites$title),]
+# Subset just a few
+sitesLago <- sitesLago[c(1,21),]
+
+allSiteContact <- lapply(as.list(sitesLago$uri),
+                         function(i) {
+                           siteContact <- ReLTER::get_site_info(i, category = "Contacts")
+                           print(siteContact$generalInfo.siteManager[[1]]$name)
+                           print(siteContact$generalInfo.siteManager[[1]]$email)
+                         })
 
 ## ----adv-greece-network-------------------------------------------------------
 lter_greece_id = "https://deims.org/networks/83453a6c-792d-4549-9dbb-c17ced2e0cc3"
@@ -257,120 +309,9 @@ tmap::tm_shape(grc) +
   lter_greece
 
 
-## ----networkGenInfo-----------------------------------------------------------
-listItaSites <- ReLTER::get_network_sites(
- networkDEIMSID =
-   "https://deims.org/network/7fef6b73-e5cb-4cd2-b438-ed32eb1504b3"
-) %>%
-  dplyr::filter(!grepl('^IT', title))
-
-
-## ----tableList----------------------------------------------------------------
-print(listItaSites[1:10, ])
-
-## ----networkMap---------------------------------------------------------------
-sites <- as_tibble(listItaSites) %>%
-  filter(grepl("Lago", title)) %>%
-  filter(!row_number() %in% c(1, 21, 22))
-
-allSiteContact <- lapply(as.list(sites$uri),
-    ReLTER::get_site_info, category = "Contacts"
-  )
-contacts <- tibble::tibble(
-  siteName = NA,
-  managerName = NA,
-  managerEmail = NA,
-  managerORCID = NA
-)
-for (i in seq_len(length(allSiteContact))) {
-  contacts <- contacts %>% 
-    tibble::add_row(
-      siteName = allSiteContact[[i]]$title,
-      managerName = allSiteContact[[i]]$generalInfo.siteManager[[1]]$name,
-      managerEmail = allSiteContact[[i]]$generalInfo.siteManager[[1]]$email,
-      managerORCID = allSiteContact[[i]]$generalInfo.siteManager[[1]]$orcid
-    )
-}
-
-
-## ----tableContacts------------------------------------------------------------
-# Contacts table
-print(contacts)
-
-## ----requirements1------------------------------------------------------------
-if (!require("purrr", quietly = TRUE))
-  install.packages("purrr")
-
-library(purrr)
-
-
-## ----allResources-------------------------------------------------------------
-eLTER_eu_networks <- readr::read_csv("./other/eLTER_eu_networks.csv", show_col_types = FALSE) %>%
-  tibble::as_tibble()
-
-related_resources <- purrr::map_dfr(
-  as.list(
-    eLTER_eu_networks$DEIMS.iD
-  ),
-  function (x) {
-    ReLTER::get_network_related_resources(x) %>%
-      dplyr::filter(!is.na(uri)) %>%
-      dplyr::mutate(
-        networkID = x,
-        type = stringr::str_replace(uri, "https://deims.org/(.*)/.*","\\1")
-      )
-  }
-) %>%
-  dplyr::inner_join(eLTER_eu_networks, by = c("networkID" = "DEIMS.iD")) %>%
-  dplyr::select(
-    title = relatedResourcesTitle,
-    uri,
-    lastChanged = relatedResourcesChanged,
-    networkID,
-    type,
-    network = eLTER_EU_Networks,
-    country
-  )
-
-
-## ----tableResources-----------------------------------------------------------
-tbl_resources <- related_resources %>%
-  dplyr::count(country, type) %>%
-  tidyr::pivot_wider(names_from = type, values_from = n, values_fill = 0)
-
-knitr::kable(
-  tbl_resources,
-  caption = "eLTER EU networks related resources"
-)
-
-
-## ----requirements2------------------------------------------------------------
-library(rnaturalearth)
-library(rworldmap)
-library(ggplot2)
-
-
-## ----resourcesMap-------------------------------------------------------------
-# Get the world map
-worldMap <- rworldmap::getMap()
-
-world_map <- rnaturalearth::ne_countries(scale = 50, returnclass = 'sf')
-europe_map <- world_map %>%
-  filter(name %in% related_resources$country)
-
-elter_map <- europe_map %>%
-  dplyr::select(
-    name,
-    geometry
-  ) %>%
-  dplyr::left_join(tbl_resources, by = c("name" = "country"))
-
-map_datasets <- ggplot2::ggplot() +
-  ggplot2::geom_sf(data = elter_map, ggplot2::aes(fill = dataset)) +
-  ggplot2::coord_sf(xlim = c(-20, 45), ylim = c(28, 73), expand = FALSE)
-
-
-map_datasets
+##------------------------------------------------------------------------------
+## Docker option
+##------------------------------------------------------------------------------
 
 ## Docker
 ## docker pull ptagliolato/rocker_relter
