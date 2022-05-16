@@ -42,3 +42,4 @@ vignettes/*.pdf
 index.*
 *.tif
 finalize.R
+Demo*
