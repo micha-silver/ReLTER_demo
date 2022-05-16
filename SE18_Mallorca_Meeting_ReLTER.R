@@ -4,40 +4,23 @@ if (!require("sf", quietly = TRUE))
   install.packages("sf")
 if (!require("terra", quietly = TRUE))
   install.packages("terra")
-if (!require("knitr", quietly = TRUE))
-  install.packages("knitr")
-if (!require("glue", quietly = TRUE))
-  install.packages("glue")
+#if (!require("knitr", quietly = TRUE))
+#  install.packages("knitr")
+#if (!require("glue", quietly = TRUE))
+#  install.packages("glue")
 if (!require("remotes", quietly = TRUE))
   install.packages("remotes")
-
-# package from Bioconductor
-if (!require("BiocManager", quietly = TRUE))
-  install.packages("BiocManager")
-BiocManager::install()
-BiocManager::install("EBImage")
-
+if (!require("dplyr", quietly = TRUE))
+  install.packages("dplyr")
 
 ## ----install-ReLTER, message=FALSE--------------------------------------------
 # Install the dev version of ReLTER for use new function
 if (!require("ReLTER", quietly = TRUE))
   remotes::install_github("ropensci/ReLTER", force = TRUE)
 
-## ReLTER is specially drafted for the LTER community.
-## 
-## To contribute to the improvement of this package, join the group of
-##     developers (https://github.com/ropensci/ReLTER).
-## 
-## If you use this package, please cite as:
-## 
-## Alessandro Oggioni, Micha Silver, Luigi Ranghetti & Paolo Tagliolato.
-##     (2021) oggioniale/ReLTER: ReLTER v1.1.0 (1.1.0). Zenodo.
-##     https://doi.org/10.5281/zenodo.5576813
-
-
 ## ----intro-loading, message=FALSE, warning=FALSE------------------------------
 # Convenient way to load list of packages
-pkg_list <- c("sf", "terra", "ReLTER", "tmap", "knitr", "glue")
+pkg_list <- c("sf", "terra", "ReLTER", "tmap", "dplyr")
 lapply(pkg_list, require, character.only = TRUE)
 
 
@@ -64,7 +47,7 @@ siteInfo <- ReLTER::get_site_info(
   deimsid = "https://deims.org/f30007c4-8a6e-4f11-ab87-569db54638fe",
   category = c("Affiliations")
 )
-knitr::kable(siteInfo$affiliation.projects[[1]])
+print(siteInfo$affiliation.projects[[1]])
 
 
 ## ----activityMarPiccolo-------------------------------------------------------
@@ -89,9 +72,6 @@ tDataset <- get_dataset_info(
   datasetid = "https://deims.org/dataset/38d604ef-decb-4d67-8ac3-cc843d10d3ef",
   show_map = TRUE
 )
-
-
-## ----datasetTable-------------------------------------------------------------
 tDataset
 
 
@@ -143,7 +123,7 @@ ReLTER::produce_site_parameters_waffle("https://deims.org/8129fed1-37b3-48e6-b78
 
 
 ## ----relter-site_map, warning=FALSE, message=FALSE----------------------------
-tmap::tmap_mode("plot")
+tmap::tmap_mode("view")
 # Example of Lake Maggiore site
 sitesNetwork <- ReLTER::get_network_sites(
   networkDEIMSID = "https://deims.org/network/7fef6b73-e5cb-4cd2-b438-ed32eb1504b3"
@@ -162,8 +142,8 @@ siteMap <- ReLTER::produce_site_map(
 
 
 ## ----devReLTER----------------------------------------------------------------
-if (!require("ReLTER", quietly = TRUE))
-  remotes::install_github("ropensci/ReLTER", ref = 'dev__withImprovements', force = TRUE)
+#if (!require("ReLTER", quietly = TRUE))
+#  remotes::install_github("ropensci/ReLTER", ref = 'dev__withImprovements', force = TRUE)
 
 
 ## ----adv-balaton-ods----------------------------------------------------------
@@ -228,11 +208,11 @@ ecosystem_items <- grepl(pattern = "ecosystem",
                          slv_research_topics$researchTopicsLabel,
                          fixed = TRUE)
 # Here is the filtered list
-knitr::kable(slv_research_topics[ecosystem_items,])
+print(slv_research_topics[ecosystem_items,])
 
 
 ## ----related-resources--------------------------------------------------------
-knitr::kable(get_network_related_resources(lter_slovakia_id))
+print(get_network_related_resources(lter_slovakia_id))
 
 
 ## ----adv-GOF, warning=FALSE, message=FALSE, eval=FALSE------------------------
@@ -262,20 +242,11 @@ knitr::kable(get_network_related_resources(lter_slovakia_id))
 ## ReLTER::save_occ_eLTER_reporting_Archive(outInat)
 
 
-## ----ReLTER-------------------------------------------------------------------
-if (!require("ReLTER", quietly = TRUE))
-  remotes::install_github("ropensci/ReLTER", force = TRUE)
-if (!require("dplyr", quietly = TRUE))
-  install.packages("dplyr")
-library(ReLTER)
-library(dplyr)
-
-
 ## ----adv-greece-network-------------------------------------------------------
-tmap::tmap_mode("view")
 lter_greece_id = "https://deims.org/networks/83453a6c-792d-4549-9dbb-c17ced2e0cc3"
-lter_greece <- ReLTER::produce_network_points_map(networkDEIMSID = lter_greece_id, countryCode = "GRC")
-
+lter_greece <- ReLTER::produce_network_points_map(
+  networkDEIMSID = lter_greece_id,
+  countryCode = "GRC")
 
 ## ----adv-greece-plot----------------------------------------------------------
 grc <- readRDS("gadm36_GRC_0_sp.rds")  # available from `produce_network_points_map()
@@ -295,16 +266,10 @@ listItaSites <- ReLTER::get_network_sites(
 
 
 ## ----tableList----------------------------------------------------------------
-knitr::kable(
-  listItaSites[1:10, ],
-  caption = "The list of site for LTER-Italy network"
-)
-
+print(listItaSites[1:10, ])
 
 ## ----networkMap---------------------------------------------------------------
-sites <- as_tibble(
-  listItaSites
-) %>%
+sites <- as_tibble(listItaSites) %>%
   filter(grepl("Lago", title)) %>%
   filter(!row_number() %in% c(1, 21, 22))
 
@@ -330,11 +295,7 @@ for (i in seq_len(length(allSiteContact))) {
 
 ## ----tableContacts------------------------------------------------------------
 # Contacts table
-knitr::kable(
-  contacts,
-  caption = "List of the contacts"
-)
-
+print(contacts)
 
 ## ----requirements1------------------------------------------------------------
 if (!require("purrr", quietly = TRUE))
@@ -409,10 +370,9 @@ map_datasets <- ggplot2::ggplot() +
   ggplot2::coord_sf(xlim = c(-20, 45), ylim = c(28, 73), expand = FALSE)
 
 
-## ----mapDatasets--------------------------------------------------------------
 map_datasets
 
-
+## Docker
 ## docker pull ptagliolato/rocker_relter
 
 
